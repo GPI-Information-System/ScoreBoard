@@ -113,17 +113,26 @@
         <div class="serving-title">SERVING</div>
         <div class="serving-controls">
 
-          <button style="padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
-            onmouseover="this.style.background='#d1d5db'"
-            onmouseout="this.style.background='#e5e7eb'">&lt;</button>
+          <button
+            id="servingA"
+            class="serving-btn"
+            style="padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+            onmouseover="if(!this.dataset.active) this.style.background='#d1d5db';"
+            onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">&lt;</button>
 
-          <button style="width: 200px; padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
-            onmouseover="this.style.background='#d1d5db'"
-            onmouseout="this.style.background='#e5e7eb'">None</button>
+          <button
+            id="servingNone"
+            class="serving-btn"
+            style="width: 200px; padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+            onmouseover="if(!this.dataset.active) this.style.background='#d1d5db';"
+            onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">None</button>
 
-          <button style="padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
-            onmouseover="this.style.background='#d1d5db'"
-            onmouseout="this.style.background='#e5e7eb'">&gt;</button>
+          <button
+            id="servingB"
+            class="serving-btn"
+            style="padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+            onmouseover="if(!this.dataset.active) this.style.background='#d1d5db';"
+            onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">&gt;</button>
 
         </div>
       </div>
@@ -223,58 +232,112 @@
 
 <script>
   $('#btnA_minus').on('click', function() {
-    const $scoreEl = $('#teamA_score');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $score = $('#teamA_score');
+    const current = parseInt($score.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $scoreEl.text(next);
+    $score.text(next);
   });
 
   $('#btnA_plus').on('click', function() {
-    const $scoreEl = $('#teamA_score');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $score = $('#teamA_score');
+    const current = parseInt($score.text(), 10) || 0;
     const next = current + 1;
-    $scoreEl.text(next);
+    $score.text(next);
   });
 
   $('#btnB_minus').on('click', function() {
-    const $scoreEl = $('#teamB_score');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $score = $('#teamB_score');
+    const current = parseInt($score.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $scoreEl.text(next);
+    $score.text(next);
   });
 
   $('#btnB_plus').on('click', function() {
-    const $scoreEl = $('#teamB_score');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $score = $('#teamB_score');
+    const current = parseInt($score.text(), 10) || 0;
     const next = current + 1;
-    $scoreEl.text(next);
+    $score.text(next);
   });
 
   $('#btnA_minusSet').on('click', function() {
-    const $scoreEl = $('#teamA_scoreSet');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $set = $('#teamA_scoreSet');
+    const current = parseInt($set.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $scoreEl.text(next);
+    $set.text(next);
   });
 
   $('#btnA_plusSet').on('click', function() {
-    const $scoreEl = $('#teamA_scoreSet');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $set = $('#teamA_scoreSet');
+    const current = parseInt($set.text(), 10) || 0;
     const next = current + 1;
-    $scoreEl.text(next);
+    $set.text(next);
   });
 
   $('#btnB_minusSet').on('click', function() {
-    const $scoreEl = $('#teamB_scoreSet');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $set = $('#teamB_scoreSet');
+    const current = parseInt($set.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $scoreEl.text(next);
+    $set.text(next);
   });
 
   $('#btnB_plusSet').on('click', function() {
-    const $scoreEl = $('#teamB_scoreSet');
-    const current = parseInt($scoreEl.text(), 10) || 0;
+    const $set = $('#teamB_scoreSet');
+    const current = parseInt($set.text(), 10) || 0;
     const next = current + 1;
-    $scoreEl.text(next);
+    $set.text(next);
+  });
+
+
+  function setActive(btn, active) {
+    if (!btn) return;
+    if (active) {
+      btn.dataset.active = '1';
+      btn.style.background = '#2563eb';
+      btn.style.borderColor = '#1e40af';
+      btn.style.color = '#fff';
+      btn.style.boxShadow = '0 0 0 3px rgba(37,99,235,.25) inset';
+    } else {
+      btn.dataset.active = '';
+      btn.style.background = '#e5e7eb';
+      btn.style.borderColor = '#ccc';
+      btn.style.color = '#000';
+      btn.style.boxShadow = '';
+    }
+  }
+
+  function deactivateOthers(exceptId) {
+    ['servingA', 'servingB', 'servingNone'].forEach(id => {
+      if (id !== exceptId) setActive(document.getElementById(id), false);
+    });
+  }
+
+  $('#servingA').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActive(this, false);
+    } else {
+      deactivateOthers('servingA');
+      setActive(this, true);
+    }
+  });
+
+  $('#servingNone').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActive(this, false);
+    } else {
+      deactivateOthers('servingNone');
+      setActive(this, true);
+    }
+  });
+
+  $('#servingB').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActive(this, false);
+    } else {
+      deactivateOthers('servingB');
+      setActive(this, true);
+    }
   });
 </script>
