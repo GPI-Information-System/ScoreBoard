@@ -1,3 +1,4 @@
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,12 +13,19 @@
   <div class="scoreboard-container">
     <div class="team-section">
       <div class="team-panel">
-        <div class="team-picture">Insert picture</div>
+
+        <div class="team-picture" style="width:300px; height:200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img src="tiger.png" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+
+        <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
+          <img src="tiger.png" id="teamAImage" alt="Image not available" style="width: 100%; height: 100%; object-fit: cover;">
+        </div> -->
 
         <input id="teamAUpload" type="file" accept="image/*">
         <label for="teamAUpload" class="insert-picture" style="margin-bottom: 10px;">Insert Picture</label>
 
-        <input type="text" class="team-name" placeholder="Insert Team Name" style="width: 300px; padding: 12px 16px; text-align: center; font-size: 20px; font-weight: 600; border: 2px solid #d1d5db; border-radius: 10px; background: #f9fafb; outline: none; transition: all .2s ease;"
+        <input type="text" class="team-name" id="teamA_name" placeholder="Insert Team Name" style="width: 300px; padding: 12px 16px; text-align: center; font-size: 20px; font-weight: 600; border: 2px solid #d1d5db; border-radius: 10px; background: #f9fafb; outline: none; transition: all .2s ease;"
           onfocus="this.style.borderColor='#2563eb'; this.style.background='#ffffff';"
           onblur="this.style.borderColor='#d1d5db'; this.style.background='#f9fafb';" />
 
@@ -170,12 +178,19 @@
 
     <div class="team-section">
       <div class="team-panel">
-        <div class="team-picture">Insert picture</div>
+
+        <div class="team-picture" style="width:300px; height:200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img src="lion.png" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+
+        <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
+          <img src="lion.png" id="teamAImage" alt="Image not available" style="width: 100%; height: 100%; object-fit: cover;">
+        </div> -->
 
         <input id="teamAUpload" class="" type="file" accept="image/*">
         <label for="teamAUpload" class="insert-picture " style="margin-bottom: 10px;">Insert Picture</label>
 
-        <input type="text" class="team-name" placeholder="Insert Team Name" style="width: 300px; padding: 12px 16px; text-align: center; font-size: 20px; font-weight: 600; border: 2px solid #d1d5db; border-radius: 10px; background: #f9fafb; outline: none; transition: all .2s ease;"
+        <input type="text" class="team-name" id="teamB_name" placeholder="Insert Team Name" style="width: 300px; padding: 12px 16px; text-align: center; font-size: 20px; font-weight: 600; border: 2px solid #d1d5db; border-radius: 10px; background: #f9fafb; outline: none; transition: all .2s ease;"
           onfocus="this.style.borderColor='#2563eb'; this.style.background='#ffffff';"
           onblur="this.style.borderColor='#d1d5db'; this.style.background='#f9fafb';" />
 
@@ -231,6 +246,14 @@
 </html>
 
 <script>
+  $('#teamA_name').on('blur', function() {
+    console.log(this.value);
+  });
+
+  $('#teamB_name').on('blur', function() {
+    console.log(this.value);
+  });
+
   $('#btnA_minus').on('click', function() {
     const $score = $('#teamA_score');
     const current = parseInt($score.text(), 10) || 0;
