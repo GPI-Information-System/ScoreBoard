@@ -5,7 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Volleyball Scoring Board</title>
+  <link rel="icon" href="images/volleyball.png">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -79,7 +80,9 @@
 
     <div class="center-content">
 
-      <button
+      <audio src="audios/Buzzer.m4a" id="buzzer_sound" preload="auto"></audio>
+
+      <button id="buzzer_btn"
         style="padding: 20px 60px; font-size: 32px; font-weight: 800; background: #dc2626; color: white; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 6px 0 #b91c1c; transition: 0.15s;"
         onmousedown="this.style.transform='scale(0.95)'"
         onmouseup="this.style.transform='scale(1)'">
@@ -426,6 +429,11 @@
     );
   }
 
+  function playBuzzer() {
+    const audio = document.getElementById('buzzer_sound');
+    audio.currentTime = 0;
+    audio.play();
+  }
 
   $('#fiveMinutes_btn').on('click', function() {
     clearInterval(interval);
@@ -441,7 +449,7 @@
 
       if (remainingMs <= 0) {
         clearInterval(interval);
-        console.log('Timer finished: 5 minutes countdown complete');
+        playBuzzer();
         return;
       }
     }
@@ -463,7 +471,7 @@
 
       if (remainingMs <= 0) {
         clearInterval(interval);
-        console.log('Timer finished: 1 minute countdown complete');
+        playBuzzer();
         return;
       }
     }
@@ -485,7 +493,7 @@
 
       if (remainingMs <= 0) {
         clearInterval(interval);
-        console.log('Timer finished: 30 seconds countdown complete');
+        playBuzzer();
         return;
       }
     }
@@ -496,5 +504,9 @@
   $('#reset_btn').on('click', function() {
     clearInterval(interval);
     $('#time_display').text('00:00');
+  });
+
+  $('#buzzer_btn').on('click', function() {
+    playBuzzer();
   });
 </script>
