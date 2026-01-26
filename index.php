@@ -14,8 +14,8 @@
     <div class="team-section">
       <div class="team-panel">
 
-        <div class="team-picture" style="width:300px; height:200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="tiger.png" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img src="tiger.png" id="teamAImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -179,16 +179,16 @@
     <div class="team-section">
       <div class="team-panel">
 
-        <div class="team-picture" style="width:300px; height:200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="lion.png" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img src="lion.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
-          <img src="lion.png" id="teamAImage" alt="Image not available" style="width: 100%; height: 100%; object-fit: cover;">
+          <img src="lion.png" id="teamBImage" alt="Image not available" style="width: 100%; height: 100%; object-fit: cover;">
         </div> -->
 
-        <input id="teamAUpload" class="" type="file" accept="image/*">
-        <label for="teamAUpload" class="insert-picture " style="margin-bottom: 10px;">Insert Picture</label>
+        <input id="teamBUpload" class="" type="file" accept="image/*">
+        <label for="teamBUpload" class="insert-picture " style="margin-bottom: 10px;">Insert Picture</label>
 
         <input type="text" class="team-name" id="teamB_name" placeholder="Insert Team Name" style="width: 300px; padding: 12px 16px; text-align: center; font-size: 20px; font-weight: 600; border: 2px solid #d1d5db; border-radius: 10px; background: #f9fafb; outline: none; transition: all .2s ease;"
           onfocus="this.style.borderColor='#2563eb'; this.style.background='#ffffff';"
@@ -361,6 +361,56 @@
     } else {
       deactivateOthers('servingB');
       setActive(this, true);
+    }
+  });
+
+  $('#teamAUpload').on('change', async function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('team', 'A');
+
+      try {
+        const response = await fetch('upload.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+          $('#teamAImage').attr('src', data.filePath);
+          console.log('Team A image path:', data.filePath);
+        } else {
+          console.error('Upload failed:', data.message);
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+      }
+    }
+  });
+
+  $('#teamBUpload').on('change', async function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('team', 'B');
+
+      try {
+        const response = await fetch('upload.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+          $('#teamBImage').attr('src', data.filePath);
+          console.log('Team B image path:', data.filePath);
+        } else {
+          console.error('Upload failed:', data.message);
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+      }
     }
   });
 </script>
