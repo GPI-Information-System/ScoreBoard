@@ -80,6 +80,38 @@
 
     <div class="center-content">
 
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+
+        <button id="abang1"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Abang
+        </button>
+
+        <button id="abang2"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Abang
+        </button>
+
+        <button id="abang3"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Abang
+        </button>
+
+      </div>
+    </div>
+
+
+    <div class="center-content">
+
       <audio src="audios/Buzzer.m4a" id="buzzer_sound" preload="auto"></audio>
 
       <button id="buzzer_btn"
@@ -177,6 +209,37 @@
             </label>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="center-content">
+
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+
+        <button id="resetDetails"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Reset Details
+        </button>
+
+        <button id="nestSet"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Next Set
+        </button>
+
+        <button id="endGame"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          End Game
+        </button>
+
       </div>
     </div>
 
@@ -508,5 +571,59 @@
 
   $('#buzzer_btn').on('click', function() {
     playBuzzer();
+  });
+
+
+  function setActiveFeature(btn, active) {
+    if (!btn) return;
+    if (active) {
+      btn.dataset.active = '1';
+      btn.style.background = '#2563eb';
+      btn.style.borderColor = '#1e40af';
+      btn.style.color = '#fff';
+      btn.style.boxShadow = '0 0 0 3px rgba(37,99,235,.25) inset';
+    } else {
+      btn.dataset.active = '';
+      btn.style.background = '#e5e7eb';
+      btn.style.borderColor = '#ccc';
+      btn.style.color = '#000';
+      btn.style.boxShadow = '';
+    }
+  }
+
+  function deactivateOthersFeature(exceptId) {
+    ['abang1', 'abang2', 'abang3'].forEach(id => {
+      if (id !== exceptId) setActive(document.getElementById(id), false);
+    });
+  }
+
+  $('#abang1').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActiveFeature(this, false);
+    } else {
+      deactivateOthersFeature('abang1');
+      setActiveFeature(this, true);
+    }
+  });
+
+  $('#abang3').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActiveFeature(this, false);
+    } else {
+      deactivateOthersFeature('abang3');
+      setActiveFeature(this, true);
+    }
+  });
+
+  $('#abang2').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    if (wasActive) {
+      setActiveFeature(this, false);
+    } else {
+      deactivateOthersFeature('abang2');
+      setActiveFeature(this, true);
+    }
   });
 </script>
