@@ -15,7 +15,7 @@
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="tiger.png" id="teamAImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="images/tiger.png" id="teamAImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -87,32 +87,33 @@
       </button>
 
       <div class="timer-panel">
-        <div class="timer-display">0:00</div>
+        <div class="timer-display" id="time_display">00:00</div>
         <div class="timer-buttons">
 
-          <button
-            style="padding: 10px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+          <button id="fiveMinutes_btn"
+            style="padding: 15px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
             onmouseover="this.style.background='#d1d5db'"
             onmouseout="this.style.background='#e5e7eb'">
-            Practice 5 Minutes
+            5 Minutes
           </button>
 
-          <button
-            style="padding: 10px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
-            onmouseover="this.style.background='#d1d5db'"
-            onmouseout="this.style.background='#e5e7eb'">
-            30 Seconds
-          </button>
-
-          <button
-            style="padding: 10px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px;"
+          <button id="oneMinute_btn"
+            style="padding: 15px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px;"
             onmouseover="this.style.background='#d1d5db'"
             onmouseout="this.style.background='#e5e7eb'">
             1 Minute
           </button>
 
+          <button id="thirtySeconds_btn"
+            style="padding: 15px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+            onmouseover="this.style.background='#d1d5db'"
+            onmouseout="this.style.background='#e5e7eb'">
+            30 Seconds
+          </button>
+
         </div>
-        <button class="reset-button" style="padding: 10px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+        <button id="reset_btn"
+          class="reset-button" style="padding: 10px 18px; font-size: 16px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
           onmouseover="this.style.background='#d1d5db'"
           onmouseout="this.style.background='#e5e7eb'">RESET</button>
       </div>
@@ -180,7 +181,7 @@
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="lion.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="images/lion.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -412,5 +413,88 @@
         console.error('Upload error:', error);
       }
     }
+  });
+
+  let interval;
+
+  function formatHMS(totalSeconds) {
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    return (
+      (mins < 10 ? "0" : "") + mins + ":" +
+      (secs < 10 ? "0" : "") + secs
+    );
+  }
+
+
+  $('#fiveMinutes_btn').on('click', function() {
+    clearInterval(interval);
+    $('#time_display').text('05:00');
+    const endTime = Date.now() + 300 * 1000;
+
+    function tick() {
+      const now = Date.now();
+      const remainingMs = Math.max(0, endTime - now);
+      const remainingSec = Math.floor(remainingMs / 1000);
+
+      $('#time_display').text(formatHMS(remainingSec));
+
+      if (remainingMs <= 0) {
+        clearInterval(interval);
+        console.log('Timer finished: 5 minutes countdown complete');
+        return;
+      }
+    }
+    tick();
+    interval = setInterval(tick, 250);
+  });
+
+  $('#oneMinute_btn').on('click', function() {
+    clearInterval(interval);
+    $('#time_display').text('01:00');
+    const endTime = Date.now() + 60 * 1000;
+
+    function tick() {
+      const now = Date.now();
+      const remainingMs = Math.max(0, endTime - now);
+      const remainingSec = Math.floor(remainingMs / 1000);
+
+      $('#time_display').text(formatHMS(remainingSec));
+
+      if (remainingMs <= 0) {
+        clearInterval(interval);
+        console.log('Timer finished: 1 minute countdown complete');
+        return;
+      }
+    }
+    tick();
+    interval = setInterval(tick, 250);
+  });
+
+  $('#thirtySeconds_btn').on('click', function() {
+    clearInterval(interval);
+    $('#time_display').text('00:30');
+    const endTime = Date.now() + 30 * 1000;
+
+    function tick() {
+      const now = Date.now();
+      const remainingMs = Math.max(0, endTime - now);
+      const remainingSec = Math.floor(remainingMs / 1000);
+
+      $('#time_display').text(formatHMS(remainingSec));
+
+      if (remainingMs <= 0) {
+        clearInterval(interval);
+        console.log('Timer finished: 30 seconds countdown complete');
+        return;
+      }
+    }
+    tick();
+    interval = setInterval(tick, 250);
+  });
+
+  $('#reset_btn').on('click', function() {
+    clearInterval(interval);
+    $('#time_display').text('00:00');
   });
 </script>
