@@ -1,4 +1,9 @@
-<?php include 'connect.php'; ?>
+<?php
+include 'connect.php';
+
+$records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record WHERE id=1"));
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +21,7 @@
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="images/tiger.png" id="teamAImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="images/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -154,7 +159,7 @@
       </div>
 
       <div class="serving-section">
-        <div class="serving-title">SERVING</div>
+        <div style="font-size: 40px; font-weight: bold; margin-bottom: 10px; margin-top: -10px;"><u>Set <span id="setNumber"></span></u></div>
         <div class="serving-controls">
 
           <button
@@ -167,7 +172,7 @@
           <button
             id="servingNone"
             class="serving-btn"
-            style="width: 200px; padding: 10px 18px; font-size: 40px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
+            style="width: 200px; padding: 10px 18px; font-size: 30px; cursor: pointer; background:#e5e7eb; border:1px solid #ccc; border-radius:6px; margin-right:8px;"
             onmouseover="if(!this.dataset.active) this.style.background='#d1d5db';"
             onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">None</button>
 
@@ -179,6 +184,7 @@
             onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">&gt;</button>
 
         </div>
+        <div style="font-size: 20px; font-weight: bold; margin-top: 10px; margin-bottom: -10px">SERVING</div>
       </div>
 
       <div class="timeout-section">
@@ -247,7 +253,7 @@
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="images/lion.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="images/alt.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -313,6 +319,27 @@
 </html>
 
 <script>
+  $(document).ready(function() {
+    var records = <?= json_encode($records) ?>;
+
+    $('#teamAImage').attr('src', records['teamA_img'] ?? 'images/alt.png');
+    $('#teamA_name').val(records['teamA_name']);
+    $('#teamA_score').text(records['teamA_score']);
+    $('#teamA_scoreSet').text(records['teamA_set']);
+
+    $('#teamBImage').attr('src', records['teamB_img'] ?? 'images/alt.png');
+    $('#teamB_name').val(records['teamB_name']);
+    $('#teamB_score').text(records['teamB_score']);
+    $('#teamB_scoreSet').text(records['teamB_set']);
+
+    $('#timeoutA1').prop('checked', (records['teamA_timeout1'] == 1 ? true : false));
+    $('#timeoutA2').prop('checked', (records['teamA_timeout2'] == 1 ? true : false));
+
+    $('#timeoutB1').prop('checked', (records['teamB_timeout1'] == 1 ? true : false));
+    $('#timeoutB2').prop('checked', (records['teamB_timeout2'] == 1 ? true : false));
+    $('#setNumber').text(records['setNumber']);
+  });
+
   $('#teamA_name').on('blur', function() {
     $.ajax({
       url: 'ajax.php?action=teamA_name',
@@ -460,7 +487,6 @@
     set.text(next);
     updateSetB($('#teamB_scoreSet').text());
   });
-
 
   function setActive(btn, active) {
     if (!btn) return;
@@ -928,20 +954,17 @@
 
   function resetDetails() {
     const answer = confirm("Are you sure you want to continue?");
-
     if (answer) {
-      // alert("Action confirmed ✅");
-    } else {
-      // alert("Action canceled ❌");
+      $.ajax({
+        url: 'ajax.php?action=resetDetails',
+        type: 'POST',
+        success: function(response) {
+          window.location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error("Response Text: " + xhr.responseText);
+        }
+      });
     }
-
-  }
-
-  function nextSet() {
-    const answer = confirm("Are you sure you want to continue?");
-  }
-
-  function endGame() {
-    const answer = confirm("Are you sure you want to continue?");
   }
 </script>
