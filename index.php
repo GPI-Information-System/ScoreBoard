@@ -1,4 +1,4 @@
-<?php ?>
+<?php include 'connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -628,14 +628,21 @@
   });
 
   function resetDetails() {
-    alert("Button double‑clicked!");
+    const answer = confirm("Are you sure you want to continue?");
+
+    if (answer) {
+      // alert("Action confirmed ✅");
+    } else {
+      // alert("Action canceled ❌");
+    }
+
   }
 
   function nextSet() {
-    alert("Button double‑clicked!");
+    const answer = confirm("Are you sure you want to continue?");
   }
 
   function endGame() {
-    alert("Button double‑clicked!");
+    const answer = confirm("Are you sure you want to continue?");
   }
 </script>
