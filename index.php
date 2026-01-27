@@ -1,4 +1,4 @@
-<?php ?>
+<?php include 'modal.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +8,7 @@
   <title>Volleyball Scoring Board</title>
   <link rel="icon" href="images/volleyball.png">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modal.css">
 </head>
 
 <body>
@@ -82,28 +83,28 @@
 
       <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
 
-        <button id="abang1"
+        <button id="display1"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Abang
+          Display 1
         </button>
 
-        <button id="abang2"
+        <button id="display2"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Abang
+          Display 2
         </button>
 
-        <button id="abang3"
+        <button id="display3"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 25px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-bottom: 30px;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Abang
+          Display 3
         </button>
 
       </div>
@@ -216,7 +217,7 @@
 
       <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
 
-        <button id="resetDetails"
+        <button data-toggle="modal" data-target="#resetDetails"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -224,7 +225,7 @@
           Reset Details
         </button>
 
-        <button id="nestSet"
+        <button data-toggle="modal" data-target="#nextSet"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -232,7 +233,7 @@
           Next Set
         </button>
 
-        <button id="endGame"
+        <button data-toggle="modal" data-target="#endGame"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -307,6 +308,7 @@
   </div>
 
   <script src="jquery.min.js"></script>
+  <script src="modal.js"></script>
 
 </body>
 
@@ -592,37 +594,37 @@
   }
 
   function deactivateOthersFeature(exceptId) {
-    ['abang1', 'abang2', 'abang3'].forEach(id => {
+    ['display1', 'display2', 'display3'].forEach(id => {
       if (id !== exceptId) setActive(document.getElementById(id), false);
     });
   }
 
-  $('#abang1').on('click', function() {
+  $('#display1').on('click', function() {
     const wasActive = this.dataset.active === '1';
     if (wasActive) {
       setActiveFeature(this, false);
     } else {
-      deactivateOthersFeature('abang1');
+      deactivateOthersFeature('display1');
       setActiveFeature(this, true);
     }
   });
 
-  $('#abang3').on('click', function() {
+  $('#display3').on('click', function() {
     const wasActive = this.dataset.active === '1';
     if (wasActive) {
       setActiveFeature(this, false);
     } else {
-      deactivateOthersFeature('abang3');
+      deactivateOthersFeature('display3');
       setActiveFeature(this, true);
     }
   });
 
-  $('#abang2').on('click', function() {
+  $('#display2').on('click', function() {
     const wasActive = this.dataset.active === '1';
     if (wasActive) {
       setActiveFeature(this, false);
     } else {
-      deactivateOthersFeature('abang2');
+      deactivateOthersFeature('display2');
       setActiveFeature(this, true);
     }
   });
