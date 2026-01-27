@@ -185,12 +185,12 @@
         <div class="timeout-label" role="group" aria-label="Timeout left">
           <div class="timeout-group">
             <label class="timeout-option">
-              <input type="checkbox" name="timeoutLeft1" value="1" id="timeout1">
+              <input type="checkbox" name="timeoutLeft1" value="1" id="timeoutA1">
               <span class="timeout-box" aria-hidden="true"></span>
             </label>
 
             <label class="timeout-option">
-              <input type="checkbox" name="timeoutLeft2" value="2" id="timeout2">
+              <input type="checkbox" name="timeoutLeft2" value="2" id="timeoutA2">
               <span class="timeout-box" aria-hidden="true"></span>
             </label>
           </div>
@@ -199,12 +199,12 @@
 
           <div class="timeout-group">
             <label class="timeout-option">
-              <input type="checkbox" name="timeoutRight1" value="3" id="timeout3">
+              <input type="checkbox" name="timeoutRight1" value="3" id="timeoutB1">
               <span class="timeout-box" aria-hidden="true"></span>
             </label>
 
             <label class="timeout-option">
-              <input type="checkbox" name="timeoutRight2" value="4" id="timeout4">
+              <input type="checkbox" name="timeoutRight2" value="4" id="timeoutB2">
               <span class="timeout-box" aria-hidden="true"></span>
             </label>
           </div>
@@ -314,67 +314,151 @@
 
 <script>
   $('#teamA_name').on('blur', function() {
-    console.log(this.value);
+    $.ajax({
+      url: 'ajax.php?action=teamA_name',
+      type: 'POST',
+      data: {
+        name: this.value
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   $('#teamB_name').on('blur', function() {
-    console.log(this.value);
+    $.ajax({
+      url: 'ajax.php?action=teamB_name',
+      type: 'POST',
+      data: {
+        name: this.value
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
+  function updateScoreA(score) {
+    $.ajax({
+      url: 'ajax.php?action=teamA_score',
+      type: 'POST',
+      data: {
+        score: score
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
   $('#btnA_minus').on('click', function() {
-    const $score = $('#teamA_score');
-    const current = parseInt($score.text(), 10) || 0;
+    const score = $('#teamA_score');
+    const current = parseInt(score.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $score.text(next);
+    score.text(next);
+    updateScoreA($('#teamA_score').text());
   });
 
   $('#btnA_plus').on('click', function() {
-    const $score = $('#teamA_score');
-    const current = parseInt($score.text(), 10) || 0;
+    const score = $('#teamA_score');
+    const current = parseInt(score.text(), 10) || 0;
     const next = current + 1;
-    $score.text(next);
+    score.text(next);
+    updateScoreA($('#teamA_score').text());
   });
 
+  function updateScoreB(score) {
+    $.ajax({
+      url: 'ajax.php?action=teamB_score',
+      type: 'POST',
+      data: {
+        score: score
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
   $('#btnB_minus').on('click', function() {
-    const $score = $('#teamB_score');
-    const current = parseInt($score.text(), 10) || 0;
+    const score = $('#teamB_score');
+    const current = parseInt(score.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $score.text(next);
+    score.text(next);
+    updateScoreB($('#teamB_score').text());
   });
 
   $('#btnB_plus').on('click', function() {
-    const $score = $('#teamB_score');
-    const current = parseInt($score.text(), 10) || 0;
+    const score = $('#teamB_score');
+    const current = parseInt(score.text(), 10) || 0;
     const next = current + 1;
-    $score.text(next);
+    score.text(next);
+    updateScoreB($('#teamB_score').text());
   });
 
+  function updateSetA(set) {
+    $.ajax({
+      url: 'ajax.php?action=teamA_set',
+      type: 'POST',
+      data: {
+        set: set
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
   $('#btnA_minusSet').on('click', function() {
-    const $set = $('#teamA_scoreSet');
-    const current = parseInt($set.text(), 10) || 0;
+    const set = $('#teamA_scoreSet');
+    const current = parseInt(set.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $set.text(next);
+    set.text(next);
+    updateSetA($('#teamA_scoreSet').text());
   });
 
   $('#btnA_plusSet').on('click', function() {
-    const $set = $('#teamA_scoreSet');
-    const current = parseInt($set.text(), 10) || 0;
+    const set = $('#teamA_scoreSet');
+    const current = parseInt(set.text(), 10) || 0;
     const next = current + 1;
-    $set.text(next);
+    set.text(next);
+    updateSetA($('#teamA_scoreSet').text());
   });
 
+  function updateSetB(set) {
+    $.ajax({
+      url: 'ajax.php?action=teamB_set',
+      type: 'POST',
+      data: {
+        set: set
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
   $('#btnB_minusSet').on('click', function() {
-    const $set = $('#teamB_scoreSet');
-    const current = parseInt($set.text(), 10) || 0;
+    const set = $('#teamB_scoreSet');
+    const current = parseInt(set.text(), 10) || 0;
     const next = Math.max(0, current - 1);
-    $set.text(next);
+    set.text(next);
+    updateSetB($('#teamB_scoreSet').text());
   });
 
   $('#btnB_plusSet').on('click', function() {
-    const $set = $('#teamB_scoreSet');
-    const current = parseInt($set.text(), 10) || 0;
+    const set = $('#teamB_scoreSet');
+    const current = parseInt(set.text(), 10) || 0;
     const next = current + 1;
-    $set.text(next);
+    set.text(next);
+    updateSetB($('#teamB_scoreSet').text());
   });
 
 
@@ -403,12 +487,28 @@
 
   $('#servingA').on('click', function() {
     const wasActive = this.dataset.active === '1';
+    var isActive = 0;
     if (wasActive) {
       setActive(this, false);
+      isActive = 0;
     } else {
       deactivateOthers('servingA');
       setActive(this, true);
+      isActive = 1;
     }
+
+    $.ajax({
+      url: 'ajax.php?action=teamA_serve',
+      type: 'POST',
+      data: {
+        serve: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+
   });
 
   $('#servingNone').on('click', function() {
@@ -419,16 +519,40 @@
       deactivateOthers('servingNone');
       setActive(this, true);
     }
+
+    $.ajax({
+      url: 'ajax.php?action=serveNone',
+      type: 'POST',
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   $('#servingB').on('click', function() {
     const wasActive = this.dataset.active === '1';
+    var isActive = 0;
     if (wasActive) {
       setActive(this, false);
+      isActive = 0;
     } else {
       deactivateOthers('servingB');
       setActive(this, true);
+      isActive = 1;
     }
+
+    $.ajax({
+      url: 'ajax.php?action=teamB_serve',
+      type: 'POST',
+      data: {
+        serve: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   $('#teamAUpload').on('change', async function(e) {
@@ -446,7 +570,19 @@
         const data = await response.json();
         if (data.success) {
           $('#teamAImage').attr('src', data.filePath);
-          console.log('Team A image path:', data.filePath);
+
+          $.ajax({
+            url: 'ajax.php?action=teamA_image',
+            type: 'POST',
+            data: {
+              path: data.filePath
+            },
+            success: function(response) {},
+            error: function(xhr, status, error) {
+              console.error("Response Text: " + xhr.responseText);
+            }
+          });
+
         } else {
           console.error('Upload failed:', data.message);
         }
@@ -471,7 +607,19 @@
         const data = await response.json();
         if (data.success) {
           $('#teamBImage').attr('src', data.filePath);
-          console.log('Team B image path:', data.filePath);
+
+          $.ajax({
+            url: 'ajax.php?action=teamB_image',
+            type: 'POST',
+            data: {
+              path: data.filePath
+            },
+            success: function(response) {},
+            error: function(xhr, status, error) {
+              console.error("Response Text: " + xhr.responseText);
+            }
+          });
+
         } else {
           console.error('Upload failed:', data.message);
         }
@@ -480,6 +628,108 @@
       }
     }
   });
+
+  $('#timeoutA1').on('click', function() {
+    var ischeck = 0;
+    if (this.checked) {
+      ischeck = 1;
+    } else {
+      ischeck = 0;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=teamA_timeout1',
+      type: 'POST',
+      data: {
+        checked: ischeck
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+
+  });
+
+  $('#timeoutA2').on('click', function() {
+    var ischeck = 0;
+    if (this.checked) {
+      ischeck = 1;
+    } else {
+      ischeck = 0;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=teamA_timeout2',
+      type: 'POST',
+      data: {
+        checked: ischeck
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+
+  });
+
+  $('#timeoutB1').on('click', function() {
+    var ischeck = 0;
+    if (this.checked) {
+      ischeck = 1;
+    } else {
+      ischeck = 0;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=teamB_timeout1',
+      type: 'POST',
+      data: {
+        checked: ischeck
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+
+  });
+
+  $('#timeoutB2').on('click', function() {
+    var ischeck = 0;
+    if (this.checked) {
+      ischeck = 1;
+    } else {
+      ischeck = 0;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=teamB_timeout2',
+      type: 'POST',
+      data: {
+        checked: ischeck
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+
+  });
+
+  function updateTimer(time) {
+    $.ajax({
+      url: 'ajax.php?action=timer',
+      type: 'POST',
+      data: {
+        time: time
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
 
   let interval;
 
@@ -509,6 +759,7 @@
       const remainingSec = Math.floor(remainingMs / 1000);
 
       $('#time_display').text(formatHMS(remainingSec));
+      updateTimer($('#time_display').text());
 
       if (remainingMs <= 0) {
         clearInterval(interval);
@@ -531,6 +782,7 @@
       const remainingSec = Math.floor(remainingMs / 1000);
 
       $('#time_display').text(formatHMS(remainingSec));
+      updateTimer($('#time_display').text());
 
       if (remainingMs <= 0) {
         clearInterval(interval);
@@ -553,6 +805,7 @@
       const remainingSec = Math.floor(remainingMs / 1000);
 
       $('#time_display').text(formatHMS(remainingSec));
+      updateTimer($('#time_display').text());
 
       if (remainingMs <= 0) {
         clearInterval(interval);
@@ -567,6 +820,7 @@
   $('#reset_btn').on('click', function() {
     clearInterval(interval);
     $('#time_display').text('00:00');
+    updateTimer($('#time_display').text());
   });
 
   $('#buzzer_btn').on('click', function() {
@@ -599,32 +853,77 @@
 
   $('#display1').on('click', function() {
     const wasActive = this.dataset.active === '1';
+    var isActive = 0;
     if (wasActive) {
       setActiveFeature(this, false);
+      isActive = 0;
     } else {
       deactivateOthersFeature('display1');
       setActiveFeature(this, true);
+      isActive = 1;
     }
-  });
 
-  $('#display3').on('click', function() {
-    const wasActive = this.dataset.active === '1';
-    if (wasActive) {
-      setActiveFeature(this, false);
-    } else {
-      deactivateOthersFeature('display3');
-      setActiveFeature(this, true);
-    }
+    $.ajax({
+      url: 'ajax.php?action=display1',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   $('#display2').on('click', function() {
     const wasActive = this.dataset.active === '1';
+    var isActive = 0;
     if (wasActive) {
       setActiveFeature(this, false);
+      isActive = 0;
     } else {
       deactivateOthersFeature('display2');
       setActiveFeature(this, true);
+      isActive = 1;
     }
+
+    $.ajax({
+      url: 'ajax.php?action=display2',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  });
+
+  $('#display3').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersFeature('display3');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=display3',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   function resetDetails() {
