@@ -1,4 +1,4 @@
-<?php include 'modal.php'; ?>
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +8,6 @@
   <title>Volleyball Scoring Board</title>
   <link rel="icon" href="images/volleyball.png">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="modal.css">
 </head>
 
 <body>
@@ -217,7 +216,7 @@
 
       <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
 
-        <button data-toggle="modal" data-target="#resetDetails"
+        <button ondblclick="resetDetails()"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -225,7 +224,7 @@
           Reset Details
         </button>
 
-        <button data-toggle="modal" data-target="#nextSet"
+        <button ondblclick="nextSet()"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -233,7 +232,7 @@
           Next Set
         </button>
 
-        <button data-toggle="modal" data-target="#endGame"
+        <button ondblclick="endGame()"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -308,7 +307,6 @@
   </div>
 
   <script src="jquery.min.js"></script>
-  <script src="modal.js"></script>
 
 </body>
 
@@ -628,4 +626,16 @@
       setActiveFeature(this, true);
     }
   });
+
+  function resetDetails() {
+    alert("Button double‑clicked!");
+  }
+
+  function nextSet() {
+    alert("Button double‑clicked!");
+  }
+
+  function endGame() {
+    alert("Button double‑clicked!");
+  }
 </script>
