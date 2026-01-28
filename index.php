@@ -10,7 +10,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volleyball Scoring Board</title>
+  <title>Volleyball Board Controller</title>
   <link rel="icon" href="images/volleyball.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -970,32 +970,38 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
   function nextSet() {
     const answer = confirm("Are you sure you want to continue?");
+    if (answer) {
+      var teamA_score = $('#teamA_score').text();
+      var teamB_score = $('#teamB_score').text();
+      var currentSet = parseInt($('#setNumber').text());
 
-    var teamA_score = $('#teamA_score').text();
-    var teamB_score = $('#teamB_score').text();
-    var currentSet = parseInt($('#setNumber').text());
-
-    $.ajax({
-      url: 'ajax.php?action=nextSet',
-      type: 'POST',
-      data: {
-        teamA_score: teamA_score,
-        teamB_score: teamB_score,
-        currentSet: currentSet
-      },
-      success: function(response) {
-        $('#setNumber').text(currentSet + 1);
-        $('#teamA_score').text(0);
-        $('#teamB_score').text(0);
-        if (currentSet + 1 == 5) $('#nextSet').attr('disabled', true);
-      },
-      error: function(xhr, status, error) {
-        console.error("Response Text: " + xhr.responseText);
-      }
-    });
+      $.ajax({
+        url: 'ajax.php?action=nextSet',
+        type: 'POST',
+        data: {
+          teamA_score: teamA_score,
+          teamB_score: teamB_score,
+          currentSet: currentSet
+        },
+        success: function(response) {
+          $('#setNumber').text(currentSet + 1);
+          $('#teamA_score').text(0);
+          $('#teamB_score').text(0);
+          if (currentSet + 1 == 5) $('#nextSet').attr('disabled', true);
+        },
+        error: function(xhr, status, error) {
+          console.error("Response Text: " + xhr.responseText);
+        }
+      });
+    }
   }
 
   function endGame() {
     const answer = confirm("Are you sure you want to continue?");
+
+    if (answer) {
+
+    }
+
   }
 </script>
