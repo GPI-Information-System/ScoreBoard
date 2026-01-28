@@ -230,7 +230,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           Reset Details
         </button>
 
-        <button ondblclick="nextSet()"
+        <button ondblclick="nextSet()" id="nextSet"
           class="serving-btn"
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 10px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
@@ -966,5 +966,36 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         }
       });
     }
+  }
+
+  function nextSet() {
+    const answer = confirm("Are you sure you want to continue?");
+
+    var teamA_score = $('#teamA_score').text();
+    var teamB_score = $('#teamB_score').text();
+    var currentSet = parseInt($('#setNumber').text());
+
+    $.ajax({
+      url: 'ajax.php?action=nextSet',
+      type: 'POST',
+      data: {
+        teamA_score: teamA_score,
+        teamB_score: teamB_score,
+        currentSet: currentSet
+      },
+      success: function(response) {
+        $('#setNumber').text(currentSet + 1);
+        $('#teamA_score').text(0);
+        $('#teamB_score').text(0);
+        if (currentSet + 1 == 5) $('#nextSet').attr('disabled', true);
+      },
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
+  function endGame() {
+    const answer = confirm("Are you sure you want to continue?");
   }
 </script>
