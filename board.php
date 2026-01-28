@@ -102,7 +102,7 @@
       text-align: center;
       font-size: 250px;
       font-weight: bold;
-      color: #ff0000;
+      color: #e9c218;
       font-family: 'Courier New', monospace;
       display: flex;
       align-items: center;
@@ -188,8 +188,8 @@
     }
 
     .timeout-box {
-      width: 35px;
-      height: 35px;
+      width: 50px;
+      height: 50px;
       border: 2px solid #666;
       background: white;
       border-radius: 4px;
@@ -221,10 +221,10 @@
     .set-item {
       background: #000;
       border: 3px solid #333;
-      padding: 15px 25px;
+      padding: 20px 30px;
       border-radius: 8px;
       min-width: 60px;
-      font-size: 40px;
+      font-size: 45px;
       font-weight: bold;
       color: white;
       text-align: center;
@@ -250,6 +250,67 @@
         border-right: none;
         border-bottom: 3px solid #999;
       }
+
+      .timeout-label {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-family: system-ui, Arial, sans-serif;
+      }
+
+      .timeout-group {
+        display: inline-flex;
+        gap: 12px;
+      }
+
+      .timeout-option {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        /* indicates clickability */
+      }
+
+      /* Visually hide the native checkbox but keep it accessible */
+      .timeout-option input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* The only visible control */
+      .timeout-box {
+        width: 40px;
+        /* size */
+        height: 40px;
+        border: 3px solid #9ca3af;
+        border-radius: 10px;
+        background: #f9fafb;
+        transition: all .15s ease;
+        display: inline-block;
+      }
+
+      /* Hover feedback */
+      .timeout-option:hover .timeout-box {
+        border-color: #6b7280;
+      }
+
+      /* Focus ring for keyboard users (focus lands on the hidden input) */
+      .timeout-option input[type="checkbox"]:focus-visible+.timeout-box {
+        outline: 3px solid #93c5fd;
+        outline-offset: 2px;
+      }
+
+      /* Checked (selected) state */
+      .timeout-option input[type="checkbox"]:checked+.timeout-box {
+        border-color: #2563eb;
+        background: #dbeafe;
+        box-shadow: inset 0 0 0 10px #3b82f6;
+        /* inner fill */
+      }
     }
   </style>
 </head>
@@ -266,9 +327,11 @@
     <div class="main-content">
       <!-- Team 1 -->
       <div class="team-section">
-        <div class="team-picture" id="team1-picture">Team 1 Picture</div>
+        <div class="team-picture" id="team1-picture">
+          <img src="images/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
         <div class="team-header">Team 1</div>
-        <div class="score-display" id="team1-score">0</div>
+        <div class="score-display" id="team1-score">25</div>
       </div>
 
       <!-- Center Section -->
@@ -281,7 +344,7 @@
           <div class="clock-display" id="clock">00:00</div>
         </div>
 
-        <!-- Serving -->
+        <!-- Serving add active in the class -->
         <div style="display: flex; align-items: center; justify-content: center;">
           <div class="serving-section">
             <div class="serving-arrow" id="left-arrow">◀</div>
@@ -290,50 +353,81 @@
           </div>
         </div>
 
-        <!-- Timeouts -->
-        <div class="timeouts-section">
-          <div class="timeouts-title">Time Out Left</div>
-          <div class="timeout-boxes">
-            <div class="timeout-box" id="timeout-1"></div>
-            <div class="timeout-box" id="timeout-2"></div>
-            <div class="timeout-box" id="timeout-3"></div>
-            <div class="timeout-box" id="timeout-4"></div>
+        <!-- Timeouts and Sets Section in One Row -->
+        <div style="display: flex; gap: 15px; align-items: stretch; margin-top: 15px;">
+
+          <!-- Left: Set Score -->
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 100px;">
+            <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #000;">SET WON</div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <div class="set-item" id="sets-1">0</div>
+            </div>
           </div>
+
+          <!-- Center: Timeouts -->
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 150px;">
+            <div style="text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #000;">Time Out Left</div>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <div class="timeout-group">
+                <label class="timeout-option">
+                  <input type="checkbox" name="timeoutLeft1" value="1" id="timeoutA1">
+                  <span class="timeout-box" aria-hidden="true"></span>
+                </label>
+
+                <label class="timeout-option">
+                  <input type="checkbox" name="timeoutLeft2" value="2" id="timeoutA2">
+                  <span class="timeout-box" aria-hidden="true"></span>
+                </label>
+
+                <hr style="margin: 0px 20px">
+
+                <label class="timeout-option">
+                  <input type="checkbox" name="timeoutRight1" value="3" id="timeoutB1">
+                  <span class="timeout-box" aria-hidden="true"></span>
+                </label>
+
+                <label class="timeout-option">
+                  <input type="checkbox" name="timeoutRight2" value="4" id="timeoutB2">
+                  <span class="timeout-box" aria-hidden="true"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Sets Won -->
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 100px;">
+            <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #000;">SET WON</div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <div class="set-item" id="sets-1">0</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Sets Won -->
-        <div class="sets-section">
-          <div class="sets-title">SETS WON</div>
-          <div class="sets-display">
-            <div class="set-item" id="sets-1">0</div>
-            <div class="set-item" id="sets-2">0</div>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+        <div style="display: flex; gap: 10px; margin-top: 30px; justify-content: center;">
 
           <!-- Item 1 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 1</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 25px;">13 - 20</div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 30px;">13 - 20</div>
           </div>
 
           <!-- Item 2 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 2</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 25px;"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 30px;"></div>
           </div>
 
           <!-- Item 3 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 3</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 25px;"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 30px;"></div>
           </div>
 
           <!-- Item 4 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 4</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 25px;"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; height: 100px; font-size: 30px;"></div>
           </div>
 
         </div>
@@ -342,7 +436,9 @@
 
       <!-- Team 2 -->
       <div class="team-section">
-        <div class="team-picture" id="team2-picture">Team B Picture</div>
+        <div class="team-picture" id="team2-picture">
+          <img src="images/alt.png" id="teamBImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
         <div class="team-header">TEAM B</div>
         <div class="score-display" id="team2-score">0</div>
       </div>
