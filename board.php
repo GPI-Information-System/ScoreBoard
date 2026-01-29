@@ -18,7 +18,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <body>
 
-  <div class="scoreboard-container">
+  <div class="scoreboard-container" id="display_score">
     <!-- Header -->
     <div class="header">
       GLORY PHILIPPINES VOLLEYBALL LEAGUE
@@ -110,25 +110,25 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <!-- Item 1 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 1</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 30px;" id="set1"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set1"></div>
           </div>
 
           <!-- Item 2 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 2</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 30px;" id="set2"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set2"></div>
           </div>
 
           <!-- Item 3 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 3</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 30px;" id="set3"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set3"></div>
           </div>
 
           <!-- Item 4 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 4</div>
-            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 30px;" id="set4"></div>
+            <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set4"></div>
           </div>
 
         </div>
@@ -146,6 +146,19 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
 
   </div>
+
+  <!-- <div id="display_video" style="display: none;">
+    <video id="video_poster"
+      playsinline
+      autoplay
+      loop
+      width="100%"
+      height="100%"
+      poster="display/sample.mp4">
+      <source src="display/sample.mp4" type="video/mp4">
+    </video>
+  </div> -->
+
 
   <script src="jquery.min.js"></script>
 
@@ -192,6 +205,25 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
+
+
+        if (response.display1 == 1) {
+          $('#display_score').hide();
+          $('#display_video').show();
+
+          $('#video_poster').currentTime = 0;
+          $('#video_poster').play()
+
+
+        } else if (response.display2 == 1) {
+
+        } else if (response.display3 == 1) {
+
+        } else {
+          $('#display_score').show();
+          $('#display_video').hide();
+
+        }
 
       },
       error: function(xhr, status, error) {

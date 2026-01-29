@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'DS Digital';
+  src: url('asset/DS-DIGI.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* show fallback, then swap in when loaded */
+}
 * {
   margin: 0;
   padding: 0;
@@ -28,7 +35,7 @@ body {
   font-size: 32px;
   font-weight: bold;
   letter-spacing: 3px;
-  border-bottom: 3px solid #ffff00;
+  border-bottom: 3px solid linear-gradient(90deg, #001a7f 0%, #003399 100%);
 }
 
 /* Main Content */
@@ -94,7 +101,7 @@ body {
   font-size: 250px;
   font-weight: bold;
   color: #f70000;
-  font-family: 'Courier New', monospace;
+  font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +132,7 @@ body {
   padding: 15px 30px;
   font-size: 70px;
   color: #ffff00;
-  font-family: 'Courier New', monospace;
+  font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;
   font-weight: bold;
   letter-spacing: 8px;
   border-radius: 8px;
@@ -215,6 +222,7 @@ body {
   padding: 20px 30px;
   border-radius: 8px;
   min-width: 60px;
+  font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;
   font-size: 45px;
   font-weight: bold;
   color: white;
