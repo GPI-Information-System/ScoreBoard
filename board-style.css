@@ -30,12 +30,17 @@ body {
 .header {
   background: linear-gradient(90deg, #001a7f 0%, #003399 100%);
   color: #ffff00;
-  text-align: center;
-  padding: 15px 20px;
+  text-shadow: 2px 2px 5px black;
+  text-align: left;
+  padding: 40px 120px; /*20PX*/
   font-size: 32px;
   font-weight: bold;
   letter-spacing: 3px;
-  border-bottom: 3px solid linear-gradient(90deg, #001a7f 0%, #003399 100%);
+  background-image: url('images/header1.png'); /* your image */
+  background-size: cover;             /* fill the div */
+  background-position: center;        /* center the image */
+  background-repeat: no-repeat;
+
 }
 
 /* Main Content */

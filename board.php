@@ -21,7 +21,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   <div class="scoreboard-container" id="display_score">
     <!-- Header -->
     <div class="header">
-      GLORY PHILIPPINES VOLLEYBALL LEAGUE
+      GPI VOLLEYBALL LEAGUE
     </div>
 
     <!-- Main Content -->
@@ -37,7 +37,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       <!-- Center Section -->
       <div class="center-section">
-        <div style="margin-bottom: 10px; background: linear-gradient(90deg, #001a7f 0%, #003399 100%); color: #ffff00; text-align: center; padding: 15px 20px; font-size: 25px; font-weight: bold; letter-spacing: 3px;">
+        <div style="margin-bottom: 10px; background: linear-gradient(90deg, #3758de 0%, #36538d 100%); color: #ffff00; text-align: center; padding: 15px 20px; font-size: 25px; font-weight: bold; letter-spacing: 3px; border-radius: 8px; text-shadow: 2px 2px 5px black;">
           <h1>Set <span id="setNumber">1</span></h1>
         </div>
         <!-- Clock -->
