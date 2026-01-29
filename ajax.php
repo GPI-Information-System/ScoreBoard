@@ -3,6 +3,52 @@ include 'connect.php';
 
 $action = $_GET['action'];
 
+if ($action === 'fetchingRecords') {
+  $result = mysqli_query($conn, "SELECT * FROM ingame_record WHERE id=1");
+  if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+    $json_data = array(
+      'teamA_name'     => $row['teamA_name'],
+      'teamA_img'      => $row['teamA_img'],
+      'teamA_score'    => $row['teamA_score'],
+      'teamA_set'      => $row['teamA_set'],
+
+      'teamA_timeout1' => $row['teamA_timeout1'],
+      'teamA_timeout2' => $row['teamA_timeout2'],
+      'teamA_serving'  => $row['teamA_serving'],
+
+      'teamA_set1'     => $row['teamA_set1'],
+      'teamA_set2'     => $row['teamA_set2'],
+      'teamA_set3'     => $row['teamA_set3'],
+      'teamA_set4'     => $row['teamA_set4'],
+
+      'teamB_name'     => $row['teamB_name'],
+      'teamB_img'      => $row['teamB_img'],
+      'teamB_score'    => $row['teamB_score'],
+      'teamB_set'      => $row['teamB_set'],
+
+      'teamB_timeout1' => $row['teamB_timeout1'],
+      'teamB_timeout2' => $row['teamB_timeout2'],
+      'teamB_serving'  => $row['teamB_serving'],
+
+      'teamB_set1'     => $row['teamB_set1'],
+      'teamB_set2'     => $row['teamB_set2'],
+      'teamB_set3'     => $row['teamB_set3'],
+      'teamB_set4'     => $row['teamB_set4'],
+
+      'display1'       => $row['display1'],
+      'display2'       => $row['display2'],
+      'display3'       => $row['display3'],
+
+      'timer'          => $row['timer'],
+      'setNumber'      => $row['setNumber']
+    );
+
+    echo json_encode($json_data);
+  }
+}
+
 if ($action === 'teamA_name') {
   $name = $_POST['name'];
 
