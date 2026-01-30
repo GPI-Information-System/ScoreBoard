@@ -386,11 +386,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       <div class="teams-strip">
         <div class="team-block">
           <div class="dot dot-a"></div>
-          <div class="team-a-name">Team A</div>
+          <div class="team-a-name" id="teamA_modal_name"></div>
         </div>
 
         <div class="team-block">
-          <div class="team-b-name">Team B</div>
+          <div class="team-b-name" id="teamB_modal_name"></div>
           <div class="dot dot-b"></div>
         </div>
       </div>
@@ -402,57 +402,27 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         <div class="right">Team B</div>
       </div>
 
-      <div class="score-body">
-
-        <div class="set-row">
-          <span class="score-chip score-chip--a">25</span>
-          <div class="set-label">S1</div>
-          <span class="score-chip score-chip--b align-right">20</span>
-        </div>
-
-        <div class="set-row">
-          <span class="score-chip score-chip--a">25</span>
-          <div class="set-label">S2</div>
-          <span class="score-chip score-chip--b align-right">20</span>
-        </div>
-
-        <div class="set-row">
-          <span class="score-chip score-chip--a">25</span>
-          <div class="set-label">S3</div>
-          <span class="score-chip score-chip--b align-right">20</span>
-        </div>
-
-        <div class="set-row">
-          <span class="score-chip score-chip--a">25</span>
-          <div class="set-label">S4</div>
-          <span class="score-chip score-chip--b align-right">20</span>
-        </div>
-
-        <div class="set-row">
-          <span class="score-chip score-chip--a">25</span>
-          <div class="set-label">S5</div>
-          <span class="score-chip score-chip--b align-right">20</span>
-        </div>
+      <div class="score-body" id="score-body-display">
 
       </div>
 
       <!-- Totals & Ratios -->
       <div class="total-wrap">
         <div class="total-card total-card--a">
-          <div class="total-title-a">Team A</div>
+          <div class="total-title-a" id="teamA_modal_name1"></div>
           <div class="total-line">
-            <div class="total-points">98</div>
+            <div class="total-points" id="teamA_total"></div>
             <div class="total-caption">Total Pts</div>
-            <div class="total-ratio-a">Ratio: <span>1.13</span></div>
+            <div class="total-ratio-a">Ratio: <span id="teamA_pointRatio"></span></div>
           </div>
         </div>
 
         <div class="total-card total-card--b">
-          <div class="total-title-b">Team B</div>
+          <div class="total-title-b" id="teamB_modal_name1"></div>
           <div class="total-line">
-            <div class="total-points">87</div>
+            <div class="total-points" id="teamB_total"></div>
             <div class="total-caption">Total Pts</div>
-            <div class="total-ratio-b">Ratio: <span>0.89</span></div>
+            <div class="total-ratio-b">Ratio: <span id="teamB_pointRatio"></span></div>
           </div>
         </div>
       </div>
@@ -1164,8 +1134,35 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $.ajax({
             url: 'ajax.php?action=endGame',
             type: 'POST',
+            dataType: 'json',
             success: function(response) {
-              console.log('Success');
+
+              var elemetContent = '';
+              for (let i = 1; i <= currentSet; i++) {
+                elemetContent += `
+                  <div class="set-row">
+                    <span class="score-chip score-chip--a">${response['teamA_set' + i]}</span>
+                    <div class="set-label">S${i}</div>
+                    <span class="score-chip score-chip--b align-right">${response['teamB_set' + i]}</span>
+                  </div>
+                `;
+              }
+              $('#teamA_total').text(response['teamA_total']);
+              $('#teamB_total').text(response['teamB_total']);
+
+              $('#teamA_pointRatio').text(response['teamA_pointRatio']);
+              $('#teamB_pointRatio').text(response['teamB_pointRatio']);
+
+              $('#teamA_modal_name').text(response['teamA_name']);
+              $('#teamB_modal_name').text(response['teamB_name']);
+
+              $('#teamA_modal_name1').text(response['teamA_name']);
+              $('#teamB_modal_name1').text(response['teamB_name']);
+
+
+              $('#score-body-display').html(elemetContent);
+              $('#myModal').css('display', 'flex');
+
             },
             error: function(xhr, status, error) {
               console.error("Response Text: " + xhr.responseText);

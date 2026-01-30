@@ -57,10 +57,35 @@ if ($action === 'endGame') {
     $teamA_total = intval($row['teamA_set1'] ?? 0) + intval($row['teamA_set2'] ?? 0) + intval($row['teamA_set3'] ?? 0) + intval($row['teamA_set4'] ?? 0) + intval($row['teamA_set5'] ?? 0);
     $teamB_total = intval($row['teamB_set1'] ?? 0) + intval($row['teamB_set2'] ?? 0) + intval($row['teamB_set3'] ?? 0) + intval($row['teamB_set4'] ?? 0) + intval($row['teamB_set5'] ?? 0);;
 
-    $teamA_pointRatio = $teamA_total > 0 ? $teamA_total / $teamB_total : 0;
-    $teamB_pointRatio = $teamB_total > 0 ? $teamB_total / $teamA_total : 0;
+    $teamA_pointRatio = $teamA_total > 0 ? round($teamA_total / $teamB_total * 1000) / 1000 : 0;
+    $teamB_pointRatio = $teamB_total > 0 ? round($teamB_total / $teamA_total * 1000) / 1000 : 0;
 
     mysqli_query($conn, "INSERT INTO game_record (teamA_name, teamA_img, teamA_set1, teamA_set2, teamA_set3, teamA_set4, teamA_set5, teamA_total, teamA_pointRatio, teamB_name, teamB_img, teamB_set1, teamB_set2, teamB_set3, teamB_set4, teamB_set5, teamB_total, teamB_pointRatio) VALUES ('{$row['teamA_name']}', '{$row['teamA_img']}', '{$row['teamA_set1']}', '{$row['teamA_set2']}', '{$row['teamA_set3']}', '{$row['teamA_set4']}', '{$row['teamA_set5']}', '$teamA_total', '$teamA_pointRatio', '{$row['teamB_name']}', '{$row['teamB_img']}', '{$row['teamB_set1']}', '{$row['teamB_set2']}', '{$row['teamB_set3']}', '{$row['teamB_set4']}', '{$row['teamB_set5']}', '$teamB_total', '$teamB_pointRatio')");
+
+    $json_data = array(
+      'teamA_name'        => $row['teamA_name'],
+      'teamB_name'        => $row['teamB_name'],
+
+      'teamA_set1'        => $row['teamA_set1'],
+      'teamA_set2'        => $row['teamA_set2'],
+      'teamA_set3'        => $row['teamA_set3'],
+      'teamA_set4'        => $row['teamA_set4'],
+      'teamA_set5'        => $row['teamA_set5'],
+
+      'teamB_set1'        => $row['teamB_set1'],
+      'teamB_set2'        => $row['teamB_set2'],
+      'teamB_set3'        => $row['teamB_set3'],
+      'teamB_set4'        => $row['teamB_set4'],
+      'teamB_set5'        => $row['teamB_set5'],
+
+      'teamA_total'       => $teamA_total,
+      'teamB_total'       => $teamB_total,
+
+      'teamA_pointRatio'  => $teamA_pointRatio,
+      'teamB_pointRatio'  => $teamB_pointRatio
+    );
+
+    echo json_encode($json_data);
   }
 }
 
