@@ -18,7 +18,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <body>
 
-  <div class="scoreboard-container" id="display_score">
+  <div class="scoreboard-container" id="display_score" style="display: none;">
     <!-- Header -->
     <div class="header">
       GPI VOLLEYBALL LEAGUE
@@ -147,7 +147,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
   </div>
 
-  <!-- <div id="display_video" style="display: none;">
+  <div id="display_video" style="display: none;">
     <video id="video_poster"
       playsinline
       autoplay
@@ -157,7 +157,12 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       poster="display/sample.mp4">
       <source src="display/sample.mp4" type="video/mp4">
     </video>
-  </div> -->
+  </div>
+
+  <div style="display: block;">
+    <h1>Camera</h1>
+    <canvas id="canvas" style="display: block; border: 2px solid black; width: 640px; height: 480px;"></canvas>
+  </div>
 
 
   <script src="jquery.min.js"></script>
@@ -168,9 +173,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <script>
   $(document).ready(function() {
-    setInterval(counter, 1000)
+    // setInterval(counter, 1000);
+    // startCamera();
   });
 
+  const canvas = document.getElementById('canvas');
+  const context_canvas = canvas.getContext('2d');
+  let display_cam;
+  let video;
 
   function counter() {
     $.ajax({
@@ -230,5 +240,36 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         console.error("Response Text: " + xhr.responseText);
       }
     });
+  }
+
+  function startCamera() {
+    navigator.mediaDevices.getUserMedia({
+      video: true
+    }).then(stream => {
+      display_cam = stream;
+      video = document.createElement('video');
+      video.srcObject = display_cam;
+      video.play();
+
+      video.onloadedmetadata = () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        draw(video);
+      };
+    }).catch(error => {
+      console.error('Error accessing camera:', error);
+      // Display error message on canvas
+      canvas.width = 640;
+      canvas.height = 480;
+      context_canvas.font = '20px Arial';
+      context_canvas.fillStyle = 'red';
+      context_canvas.fillText('Camera access denied or unavailable', 10, 50);
+      context_canvas.fillText('Please check permissions and try again', 10, 80);
+    });
+  }
+
+  function draw(video) {
+    context_canvas.drawImage(video, 0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(() => draw(video));
   }
 </script>
