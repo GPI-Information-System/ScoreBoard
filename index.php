@@ -368,6 +368,98 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
+  <div id="myModal" class="modal-overlay">
+    <div class="modal-panel">
+
+      <!-- Close -->
+      <span
+        class="modal-close"
+        title="Close"
+        onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+      <!-- Title -->
+      <div class="modal-title-wrap">
+        <div class="modal-title">VOLLEYBALL MATCH RESULT</div>
+      </div>
+
+      <!-- Teams strip -->
+      <div class="teams-strip">
+        <div class="team-block">
+          <div class="dot dot-a"></div>
+          <div class="team-a-name">Team A</div>
+        </div>
+
+        <div class="team-block">
+          <div class="team-b-name">Team B</div>
+          <div class="dot dot-b"></div>
+        </div>
+      </div>
+
+      <!-- Score grid -->
+      <div class="score-head">
+        <div class="left">Team A</div>
+        <div class="mid">Set</div>
+        <div class="right">Team B</div>
+      </div>
+
+      <div class="score-body">
+
+        <div class="set-row">
+          <span class="score-chip score-chip--a">25</span>
+          <div class="set-label">S1</div>
+          <span class="score-chip score-chip--b align-right">20</span>
+        </div>
+
+        <div class="set-row">
+          <span class="score-chip score-chip--a">25</span>
+          <div class="set-label">S2</div>
+          <span class="score-chip score-chip--b align-right">20</span>
+        </div>
+
+        <div class="set-row">
+          <span class="score-chip score-chip--a">25</span>
+          <div class="set-label">S3</div>
+          <span class="score-chip score-chip--b align-right">20</span>
+        </div>
+
+        <div class="set-row">
+          <span class="score-chip score-chip--a">25</span>
+          <div class="set-label">S4</div>
+          <span class="score-chip score-chip--b align-right">20</span>
+        </div>
+
+        <div class="set-row">
+          <span class="score-chip score-chip--a">25</span>
+          <div class="set-label">S5</div>
+          <span class="score-chip score-chip--b align-right">20</span>
+        </div>
+
+      </div>
+
+      <!-- Totals & Ratios -->
+      <div class="total-wrap">
+        <div class="total-card total-card--a">
+          <div class="total-title-a">Team A</div>
+          <div class="total-line">
+            <div class="total-points">98</div>
+            <div class="total-caption">Total Pts</div>
+            <div class="total-ratio-a">Ratio: <span>1.13</span></div>
+          </div>
+        </div>
+
+        <div class="total-card total-card--b">
+          <div class="total-title-b">Team B</div>
+          <div class="total-line">
+            <div class="total-points">87</div>
+            <div class="total-caption">Total Pts</div>
+            <div class="total-ratio-b">Ratio: <span>0.89</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script src="jquery.min.js"></script>
 
 </body>
