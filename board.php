@@ -159,9 +159,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </video>
   </div>
 
-  <div style="display: block;">
-    <h1>Camera</h1>
-    <canvas id="canvas" style="display: block; border: 2px solid black; width: 640px; height: 480px;"></canvas>
+  <div id="display_camera" style="display: block;">
+    <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
+      <canvas id="canvas" style="border: 2px solid black; width: 1200px; height: 600px;"></canvas>
+    </div>
   </div>
 
 
@@ -176,11 +177,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     // setInterval(counter, 1000);
     // startCamera();
   });
-
-  const canvas = document.getElementById('canvas');
-  const context_canvas = canvas.getContext('2d');
-  let display_cam;
-  let video;
 
   function counter() {
     $.ajax({
@@ -218,21 +214,21 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 
         if (response.display1 == 1) {
-          $('#display_score').hide();
-          $('#display_video').show();
+          // $('#display_score').hide();
+          // $('#display_video').show();
 
-          $('#video_poster').currentTime = 0;
-          $('#video_poster').play()
-
+          // $('#video_poster').currentTime = 0;
+          // $('#video_poster').play()
+          // startCamera();
 
         } else if (response.display2 == 1) {
 
         } else if (response.display3 == 1) {
 
         } else {
-          $('#display_score').show();
-          $('#display_video').hide();
-
+          // $('#display_score').show();
+          // $('#display_video').hide();
+          // stopCamera();
         }
 
       },
@@ -241,6 +237,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       }
     });
   }
+
+  const canvas = document.getElementById('canvas');
+  const context_canvas = canvas.getContext('2d');
+  let display_cam;
+  let video;
 
   function startCamera() {
     navigator.mediaDevices.getUserMedia({
@@ -271,5 +272,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   function draw(video) {
     context_canvas.drawImage(video, 0, 0, canvas.width, canvas.height);
     requestAnimationFrame(() => draw(video));
+  }
+
+  function stopCamera() {
+    if (display_cam) {
+      display_cam.getTracks().forEach(track => track.stop());
+      display_cam = null;
+    }
+    context_canvas.clearRect(0, 0, canvas.width, canvas.height);
+    video.srcObject = null;
   }
 </script>
