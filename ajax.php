@@ -49,6 +49,21 @@ if ($action === 'fetchingRecords') {
   }
 }
 
+if ($action === 'endGame') {
+  $result = mysqli_query($conn, "SELECT * FROM ingame_record WHERE id=1");
+  if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+    $teamA_total = intval($row['teamA_set1'] ?? 0) + intval($row['teamA_set2'] ?? 0) + intval($row['teamA_set3'] ?? 0) + intval($row['teamA_set4'] ?? 0) + intval($row['teamA_set5'] ?? 0);
+    $teamB_total = intval($row['teamB_set1'] ?? 0) + intval($row['teamB_set2'] ?? 0) + intval($row['teamB_set3'] ?? 0) + intval($row['teamB_set4'] ?? 0) + intval($row['teamB_set5'] ?? 0);;
+
+    $teamA_pointRatio = $teamA_total > 0 ? $teamA_total / $teamB_total : 0;
+    $teamB_pointRatio = $teamB_total > 0 ? $teamB_total / $teamA_total : 0;
+
+    mysqli_query($conn, "INSERT INTO game_record (teamA_name, teamA_img, teamA_set1, teamA_set2, teamA_set3, teamA_set4, teamA_set5, teamA_total, teamA_pointRatio, teamB_name, teamB_img, teamB_set1, teamB_set2, teamB_set3, teamB_set4, teamB_set5, teamB_total, teamB_pointRatio) VALUES ('{$row['teamA_name']}', '{$row['teamA_img']}', '{$row['teamA_set1']}', '{$row['teamA_set2']}', '{$row['teamA_set3']}', '{$row['teamA_set4']}', '{$row['teamA_set5']}', '$teamA_total', '$teamA_pointRatio', '{$row['teamB_name']}', '{$row['teamB_img']}', '{$row['teamB_set1']}', '{$row['teamB_set2']}', '{$row['teamB_set3']}', '{$row['teamB_set4']}', '{$row['teamB_set5']}', '$teamB_total', '$teamB_pointRatio')");
+  }
+}
+
 if ($action === 'teamA_name') {
   $name = $_POST['name'];
 
@@ -164,7 +179,7 @@ if ($action === 'display3') {
 if ($action === 'resetDetails') {
   $display = $_POST['display'];
 
-  mysqli_query($conn, "UPDATE ingame_record SET teamA_name=null, teamA_img=null, teamA_score=0, teamA_set=0, teamA_timeout1=0, teamA_timeout2=0, teamA_serving=0, teamA_set1=null, teamA_set2=null, teamA_set3=null, teamA_set4=null, teamB_name=null, teamB_img=null, teamB_score=0, teamB_set=0, teamB_timeout1=0, teamB_timeout2=0, teamB_serving=0, teamB_set1=null, teamB_set2=null, teamB_set3=null, teamB_set4=null, display1=0, display2=0, display3=0, timer='00:00', setNumber=1 WHERE id=1");
+  mysqli_query($conn, "UPDATE ingame_record SET teamA_name=null, teamA_img=null, teamA_score=0, teamA_set=0, teamA_timeout1=0, teamA_timeout2=0, teamA_serving=0, teamA_set1=null, teamA_set2=null, teamA_set3=null, teamA_set4=null, teamA_set5=null, teamB_name=null, teamB_img=null, teamB_score=0, teamB_set=0, teamB_timeout1=0, teamB_timeout2=0, teamB_serving=0, teamB_set1=null, teamB_set2=null, teamB_set3=null, teamB_set4=null, teamB_set5=null, display1=0, display2=0, display3=0, timer='00:00', setNumber=1, endGame=0 WHERE id=1");
 }
 
 if ($action === 'nextSet') {
@@ -180,4 +195,19 @@ if ($action === 'nextSet') {
   elseif ($currentSet == 4) $query = " teamA_set4=' $teamA_score', teamB_set4='$teamB_score', ";
 
   if ($query != '') mysqli_query($conn, "UPDATE ingame_record SET $query setNumber='$nextSet', teamA_score=0, teamB_score=0 WHERE id=1");
+}
+
+if ($action === 'saveRecord') {
+  $teamA_score = $_POST['teamA_score'];
+  $teamB_score = $_POST['teamB_score'];
+  $currentSet = intval($_POST['currentSet']);
+  $query = '';
+
+  if ($currentSet == 1) $query = " teamA_set1=' $teamA_score', teamB_set1='$teamB_score', ";
+  elseif ($currentSet == 2) $query = " teamA_set2=' $teamA_score', teamB_set2='$teamB_score', ";
+  elseif ($currentSet == 3) $query = " teamA_set3=' $teamA_score', teamB_set3='$teamB_score', ";
+  elseif ($currentSet == 4) $query = " teamA_set4=' $teamA_score', teamB_set4='$teamB_score', ";
+  elseif ($currentSet == 5) $query = " teamA_set5=' $teamA_score', teamB_set5='$teamB_score', ";
+
+  if ($query != '') mysqli_query($conn, "UPDATE ingame_record SET $query endGame=1 WHERE id=1");
 }

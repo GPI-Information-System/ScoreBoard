@@ -92,6 +92,34 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display Video
+        </button>
+
+        <button id="display2"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display Versus
+        </button>
+
+        <button id="display3"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display 3
+        </button>
+
+      </div>
+
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+
+        <button id="display1"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
           Display 1
         </button>
 
@@ -244,6 +272,34 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
           End Game
+        </button>
+
+      </div>
+
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+
+        <button id="display1"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display 1
+        </button>
+
+        <button id="display2"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display 2
+        </button>
+
+        <button id="display3"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display 3
         </button>
 
       </div>
@@ -1000,8 +1056,35 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     const answer = confirm("Are you sure you want to continue?");
 
     if (answer) {
+      var teamA_score = $('#teamA_score').text();
+      var teamB_score = $('#teamB_score').text();
+      var currentSet = parseInt($('#setNumber').text());
+
+      $.ajax({
+        url: 'ajax.php?action=saveRecord',
+        type: 'POST',
+        data: {
+          teamA_score: teamA_score,
+          teamB_score: teamB_score,
+          currentSet: currentSet
+        },
+        success: function(response) {
+          $.ajax({
+            url: 'ajax.php?action=endGame',
+            type: 'POST',
+            success: function(response) {
+              console.log('Success');
+            },
+            error: function(xhr, status, error) {
+              console.error("Response Text: " + xhr.responseText);
+            }
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error("Response Text: " + xhr.responseText);
+        }
+      });
 
     }
-
   }
 </script>
