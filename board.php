@@ -18,7 +18,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <body>
 
-  <div class="scoreboard-container" id="display_score" style="display: none;">
+  <div class="scoreboard-container" id="display_score" style="display: block;">
     <!-- Header -->
     <div class="header">
       GPI VOLLEYBALL LEAGUE
@@ -159,7 +159,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </video>
   </div>
 
-  <div id="display_camera" style="display: block;">
+  <div id="display_camera" style="display: none;">
     <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
       <canvas id="canvas" style="border: 2px solid black; width: 1200px; height: 600px;"></canvas>
     </div>
