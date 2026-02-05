@@ -63,8 +63,25 @@ if ($action === 'endGame') {
     $teamA_status = $teamA_total > $teamB_total ? 'Winner' : 'Loser';
     $teamB_status = $teamB_total > $teamA_total ? 'Winner' : 'Loser';
 
-    mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_pointRatio, team_status) VALUES ('{$row['teamA_name']}', '{$row['teamA_img']}', '{$row['teamA_set1']}', '{$row['teamA_set2']}', '{$row['teamA_set3']}', '{$row['teamA_set4']}', '{$row['teamA_set5']}', '$teamA_total', '$teamA_pointRatio', '$teamA_status')");
-    mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_pointRatio, team_status) VALUES ('{$row['teamB_name']}', '{$row['teamB_img']}', '{$row['teamB_set1']}', '{$row['teamB_set2']}', '{$row['teamB_set3']}', '{$row['teamB_set4']}', '{$row['teamB_set5']}', '$teamB_total', '$teamB_pointRatio', '$teamB_status')");
+    if ($row['teamA_set'] == 2 && $row['teamB_set'] == 0) {
+      $teamA_pointAwarded = 3;
+      $teamB_pointAwarded = 0;
+    } elseif ($row['teamA_set'] == 2 && $row['teamB_set'] == 1) {
+      $teamA_pointAwarded = 2;
+      $teamB_pointAwarded = 1;
+    } elseif ($row['teamA_set'] == 1 && $row['teamB_set'] == 2) {
+      $teamA_pointAwarded = 1;
+      $teamB_pointAwarded = 2;
+    } elseif ($row['teamA_set'] == 0 && $row['teamB_set'] == 2) {
+      $teamA_pointAwarded = 0;
+      $teamB_pointAwarded = 3;
+    } else {
+      $teamA_pointAwarded = 0;
+      $teamB_pointAwarded = 0;
+    }
+
+    mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_set, team_pointAwarded, team_pointRatio, team_status) VALUES ('{$row['teamA_name']}', '{$row['teamA_img']}', '{$row['teamA_set1']}', '{$row['teamA_set2']}', '{$row['teamA_set3']}', '{$row['teamA_set4']}', '{$row['teamA_set5']}', '$teamA_total', '$row[teamA_set]', '$teamA_pointAwarded', '$teamA_pointRatio', '$teamA_status')");
+    mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_set, team_pointAwarded, team_pointRatio, team_status) VALUES ('{$row['teamB_name']}', '{$row['teamB_img']}', '{$row['teamB_set1']}', '{$row['teamB_set2']}', '{$row['teamB_set3']}', '{$row['teamB_set4']}', '{$row['teamB_set5']}', '$teamB_total', '$row[teamB_set]', '$teamB_pointAwarded', '$teamB_pointRatio', '$teamB_status')");
 
     mysqli_query($conn, "UPDATE game_record SET game = CEIL(id / 2) WHERE id IN (SELECT id FROM (SELECT id FROM game_record ORDER BY id DESC LIMIT 2) AS subquery)");
 
@@ -239,6 +256,12 @@ if ($action === 'saveRecord') {
   elseif ($currentSet == 3) $query = " teamA_set3=' $teamA_score', teamB_set3='$teamB_score', ";
   elseif ($currentSet == 4) $query = " teamA_set4=' $teamA_score', teamB_set4='$teamB_score', ";
   elseif ($currentSet == 5) $query = " teamA_set5=' $teamA_score', teamB_set5='$teamB_score', ";
+
+  if ($teamA_score > $teamB_score) {
+    $query .= " teamA_set = teamA_set + 1, ";
+  } elseif ($teamB_score > $teamA_score) {
+    $query .= " teamB_set = teamB_set + 1, ";
+  }
 
   if ($query != '') mysqli_query($conn, "UPDATE ingame_record SET $query endGame=1 WHERE id=1");
 }
