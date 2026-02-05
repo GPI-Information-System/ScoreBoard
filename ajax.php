@@ -64,7 +64,6 @@ if ($action === 'endGame') {
     $teamB_status = $teamB_total > $teamA_total ? 'Winner' : 'Loser';
 
     mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_pointRatio, team_status) VALUES ('{$row['teamA_name']}', '{$row['teamA_img']}', '{$row['teamA_set1']}', '{$row['teamA_set2']}', '{$row['teamA_set3']}', '{$row['teamA_set4']}', '{$row['teamA_set5']}', '$teamA_total', '$teamA_pointRatio', '$teamA_status')");
-
     mysqli_query($conn, "INSERT INTO game_record (team_name, team_img, team_set1, team_set2, team_set3, team_set4, team_set5, team_total, team_pointRatio, team_status) VALUES ('{$row['teamB_name']}', '{$row['teamB_img']}', '{$row['teamB_set1']}', '{$row['teamB_set2']}', '{$row['teamB_set3']}', '{$row['teamB_set4']}', '{$row['teamB_set5']}', '$teamB_total', '$teamB_pointRatio', '$teamB_status')");
 
     mysqli_query($conn, "UPDATE game_record SET game = CEIL(id / 2) WHERE id IN (SELECT id FROM (SELECT id FROM game_record ORDER BY id DESC LIMIT 2) AS subquery)");
