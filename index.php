@@ -12,7 +12,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Volleyball Board Controller</title>
   <link rel="icon" href="images/volleyball.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
@@ -430,7 +430,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
-  <script src="jquery.min.js"></script>
+  <script src="script/jquery.min.js"></script>
 
 </body>
 
