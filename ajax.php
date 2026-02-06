@@ -60,8 +60,8 @@ if ($action === 'endGame') {
     $teamA_pointRatio = $teamA_total > 0 ? round($teamA_total / $teamB_total * 1000) / 1000 : 0;
     $teamB_pointRatio = $teamB_total > 0 ? round($teamB_total / $teamA_total * 1000) / 1000 : 0;
 
-    $teamA_status = $teamA_total > $teamB_total ? 'Winner' : 'Loser';
-    $teamB_status = $teamB_total > $teamA_total ? 'Winner' : 'Loser';
+    $teamA_status = $row['teamA_set'] > $row['teamB_set'] ? 'Winner' : 'Loser';
+    $teamB_status = $row['teamB_set'] > $row['teamA_set'] ? 'Winner' : 'Loser';
 
     if ($row['teamA_set'] == 2 && $row['teamB_set'] == 0) {
       $teamA_pointAwarded = 3;
