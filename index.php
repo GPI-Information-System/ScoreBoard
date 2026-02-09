@@ -113,30 +113,62 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       </div>
 
-      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px;">
 
-        <button id="display1"
+        <audio src="audios/Hawks.mp3" id="sound1_sound" preload="auto"></audio>
+        <audio src="audios/Sharks.mp3" id="sound2_sound" preload="auto"></audio>
+        <audio src="audios/Tigers.mp3" id="sound3_sound" preload="auto"></audio>
+        <audio src="audios/Vipers.mp3" id="sound4_sound" preload="auto"></audio>
+        <audio src="audios/Wildcats.mp3" id="sound5_sound" preload="auto"></audio>
+        <audio src="audios/Wolves.mp3" id="sound6_sound" preload="auto"></audio>
+
+
+        <button id="sound1"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 1
+          Sound
         </button>
 
-        <button id="display2"
+        <button id="sound2"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 2
+          Sound
         </button>
 
-        <button id="display3"
+        <button id="sound3"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 3
+          Sound
+        </button>
+
+        <button id="sound4"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Sound
+        </button>
+
+        <button id="sound5"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Sound
+        </button>
+
+        <button id="sound6"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Sound
         </button>
 
       </div>
@@ -1240,6 +1272,42 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
   $('#wolvesBtn').on('click', function() {
     const audio = document.getElementById('Wolves_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound1').on('click', function() {
+    const audio = document.getElementById('sound1_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound2').on('click', function() {
+    const audio = document.getElementById('sound2_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound3').on('click', function() {
+    const audio = document.getElementById('sound3_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound4').on('click', function() {
+    const audio = document.getElementById('sound4_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound5').on('click', function() {
+    const audio = document.getElementById('sound5_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sound6').on('click', function() {
+    const audio = document.getElementById('sound6_sound');
     audio.currentTime = 0;
     audio.play();
   });
