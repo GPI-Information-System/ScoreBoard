@@ -148,7 +148,19 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
   </div>
 
-  <div id="display_video" style="display: none;">
+  <div id="display_poster" style="margin: 0; padding: 0; display: none;">
+    <div style="
+      width: 100vw;
+      height: 100vh;                 
+      background-image: url('display/poster.png');
+      background-size: contain;      
+      background-position: center;   
+      background-repeat: no-repeat;  
+      background-color: #000;">
+    </div>
+  </div>
+
+  <div id="display_video">
     <video id="video_poster"
       playsinline
       autoplay
@@ -175,9 +187,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <script>
   $(document).ready(function() {
-    // setInterval(counter, 1000);
-    // startCamera();
+    setInterval(counter, 1000);
   });
+
+  var isCameraDisplay = false;
 
   function counter() {
     $.ajax({
@@ -215,23 +228,54 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 
         if (response.display1 == 1) {
-          // $('#display_score').hide();
-          // $('#display_video').show();
 
-          // $('#video_poster').currentTime = 0;
-          // $('#video_poster').play()
-          // startCamera();
+          $('#display_score').hide();
+          $('#display_poster').show();
+          $('#display_video').hide();
+          $('#display_camera').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
 
         } else if (response.display2 == 1) {
 
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_video').show();
+          $('#display_camera').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
+
         } else if (response.display3 == 1) {
 
-        } else {
-          // $('#display_score').show();
-          // $('#display_video').hide();
-          // stopCamera();
-        }
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_video').hide();
+          $('#display_camera').show();
 
+          if (!isCameraDisplay) {
+            startCamera();
+            isCameraDisplay = true;
+          }
+
+        } else {
+
+          $('#display_score').show();
+          $('#display_poster').hide();
+          $('#display_video').hide();
+          $('#display_camera').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
+
+        }
       },
       error: function(xhr, status, error) {
         console.error("Response Text: " + xhr.responseText);

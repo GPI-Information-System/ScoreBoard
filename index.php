@@ -92,7 +92,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display Video
+          Display Poster
         </button>
 
         <button id="display2"
@@ -108,7 +108,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 3
+          Display Camera
         </button>
 
       </div>
