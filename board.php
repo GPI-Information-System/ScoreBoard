@@ -160,7 +160,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
-  <div id="display_video">
+  <!-- <div id="display_video">
     <video id="video_poster"
       playsinline
       autoplay
@@ -170,7 +170,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       poster="display/sample.mp4">
       <source src="display/sample.mp4" type="video/mp4">
     </video>
-  </div>
+  </div> -->
 
   <div id="display_camera" style="display: none;">
     <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh;">

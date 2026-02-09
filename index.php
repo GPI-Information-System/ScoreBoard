@@ -276,30 +276,61 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       </div>
 
-      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; justify-content: center;">
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px;display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
 
-        <button id="display1"
+        <audio src="audios/Hawks.mp3" id="Hawks_sound" preload="auto"></audio>
+        <audio src="audios/Sharks.mp3" id="Sharks_sound" preload="auto"></audio>
+        <audio src="audios/Tigers.mp3" id="Tigers_sound" preload="auto"></audio>
+        <audio src="audios/Vipers.mp3" id="Vipers_sound" preload="auto"></audio>
+        <audio src="audios/Wildcats.mp3" id="Wildcats_sound" preload="auto"></audio>
+        <audio src="audios/Wolves.mp3" id="Wolves_sound" preload="auto"></audio>
+
+        <button id="hawksBtn"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 1
+          Hawks
         </button>
 
-        <button id="display2"
+        <button id="sharksBtn"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 2
+          Sharks
         </button>
 
-        <button id="display3"
+        <button id="tigersBtn"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Display 3
+          Tigers
+        </button>
+
+        <button id="vipersBtn"
+          class="serving-btn"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Vipers
+        </button>
+
+        <button id="wildcatsBtn"
+          class="serving-btn"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Wildcats
+        </button>
+
+        <button id="wolvesBtn"
+          class="serving-btn"
+          style="padding: 3px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 10px;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Wolves
         </button>
 
       </div>
@@ -1176,4 +1207,40 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
     }
   }
+
+  $('#hawksBtn').on('click', function() {
+    const audio = document.getElementById('Hawks_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#sharksBtn').on('click', function() {
+    const audio = document.getElementById('Sharks_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#tigersBtn').on('click', function() {
+    const audio = document.getElementById('Tigers_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#vipersBtn').on('click', function() {
+    const audio = document.getElementById('Vipers_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#wildcatsBtn').on('click', function() {
+    const audio = document.getElementById('Wildcats_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  $('#wolvesBtn').on('click', function() {
+    const audio = document.getElementById('Wolves_sound');
+    audio.currentTime = 0;
+    audio.play();
+  });
 </script>
