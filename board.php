@@ -172,13 +172,201 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </video>
   </div> -->
 
+  <div id="display_versus" style="display: none;">
+    <div style="
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;">
+
+      <!-- Animated Background Elements -->
+      <div style="
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(233, 194, 24, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -100px;
+        left: -100px;
+        animation: pulse 4s ease-in-out infinite;">
+      </div>
+      <div style="
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(233, 194, 24, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -100px;
+        right: -100px;
+        animation: pulse 4s ease-in-out infinite 2s;">
+      </div>
+
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 1200px;
+        gap: 40px;
+        position: relative;
+        z-index: 1;">
+
+        <!-- Team A -->
+        <div style="
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          animation: slideInLeft 0.8s ease-out;">
+          <img id="versus_teamA_img" src="images/team_A_1770688728.png" alt="Team A" style="
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            border: 4px solid #e9c218;
+            box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;"
+            onmouseover="this.style.transform='scale(1.05) rotateY(-5deg)'; this.style.boxShadow='0 20px 60px rgba(233, 194, 24, 0.6)'"
+            onmouseout="this.style.transform='scale(1) rotateY(0)'; this.style.boxShadow='0 10px 40px rgba(233, 194, 24, 0.3)'">
+          <div id="versus_teamA_name" style="
+            font-size: 48px;
+            font-weight: bold;
+            color: #e9c218;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+            text-align: center;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;">
+            Team A
+          </div>
+        </div>
+
+        <!-- VS -->
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;">
+          <div style="
+            font-size: 80px;
+            font-weight: bold;
+            color: #e9c218;
+            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
+            letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;">
+            VS
+          </div>
+          <div style="
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);">
+          </div>
+        </div>
+
+        <!-- Team B -->
+        <div style="
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          animation: slideInRight 0.8s ease-out;">
+          <img id="versus_teamB_img" src="images/team_B_1770688732.png" alt="Team B" style="
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            border: 4px solid #e9c218;
+            box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;"
+            onmouseover="this.style.transform='scale(1.05) rotateY(5deg)'; this.style.boxShadow='0 20px 60px rgba(233, 194, 24, 0.6)'"
+            onmouseout="this.style.transform='scale(1) rotateY(0)'; this.style.boxShadow='0 10px 40px rgba(233, 194, 24, 0.3)'">
+          <div id="versus_teamB_name" style="
+            font-size: 48px;
+            font-weight: bold;
+            color: #e9c218;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+            text-align: center;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;">
+            Team B
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-100px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </div>
+
   <div id="display_camera" style="display: none;">
     <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
       <canvas id="canvas" style="border: 2px solid black; width: 1200px; height: 600px;"></canvas>
     </div>
   </div>
 
-  <div id="display_results" style="display: block;">
+  <div id="display_results" style="display: none;">
     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background: linear-gradient(180deg, #0b1a3a 0%, #0f2a5a 60%, #162b4a 100%); color:#fff;">
       <div style=" font-size:40px; font-weight:bold; letter-spacing:2px; margin-bottom:20px; text-align:center;">GAME RESULT</div>
 
@@ -219,7 +407,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <script>
   $(document).ready(function() {
-    setInterval(counter, 1000);
+    // setInterval(counter, 1000);
   });
 
   var isCameraDisplay = false;
@@ -289,7 +477,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_results').show();
           $('#display_score').hide();
           $('#display_poster').hide();
-          $('#display_video').hide();
+          $('#display_versus').hide();
           $('#display_camera').hide();
 
           if (isCameraDisplay) {
@@ -302,7 +490,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').show();
-          $('#display_video').hide();
+          $('#display_versus').hide();
           $('#display_camera').hide();
 
           if (isCameraDisplay) {
@@ -315,7 +503,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').hide();
-          $('#display_video').show();
+          $('#display_versus').show();
           $('#display_camera').hide();
 
           if (isCameraDisplay) {
@@ -328,7 +516,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').hide();
-          $('#display_video').hide();
+          $('#display_versus').hide();
           $('#display_camera').show();
 
           if (!isCameraDisplay) {
@@ -341,7 +529,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_results').hide();
           $('#display_score').show();
           $('#display_poster').hide();
-          $('#display_video').hide();
+          $('#display_versus').hide();
           $('#display_camera').hide();
 
           if (isCameraDisplay) {
