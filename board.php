@@ -12,14 +12,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Volleyball Scoreboard</title>
-  <link rel="icon" href="images/volleyball.png">
+  <link rel="icon" href="display/ball.png">
   <link rel="stylesheet" href="style/style.css">
   <link rel="stylesheet" href="style/board-style.css">
 </head>
 
 <body>
 
-  <div class="scoreboard-container" id="display_score" style="display: block;">
+  <div id="display_score" class="scoreboard-container" style="display: block;">
     <!-- Header -->
     <div class="header">
       GPI VOLLEYBALL LEAGUE
@@ -30,7 +30,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       <!-- Team 1 -->
       <div class="team-section">
         <div class="team-picture">
-          <img src="images/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="display/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
         <div class="team-header" id="teamA_name">Team A</div>
         <div class="score-display" id="teamA_score">0</div>
@@ -139,7 +139,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       <!-- Team 2 -->
       <div class="team-section">
         <div class="team-picture">
-          <img src="images/alt.png" id="teamBImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="display/alt.png" id="teamBImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
         <div class="team-header" id="teamB_name">Team B</div>
         <div class="score-display" id="teamB_score">0</div>
@@ -178,6 +178,38 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
+  <div id="display_results" style="display: block;">
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background: linear-gradient(180deg, #0b1a3a 0%, #0f2a5a 60%, #162b4a 100%); color:#fff;">
+      <div style=" font-size:40px; font-weight:bold; letter-spacing:2px; margin-bottom:20px; text-align:center;">GAME RESULT</div>
+
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; width:100%;">
+        <div style="flex:1; min-width:240px; display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div id="result_teamA_status"></div>
+          <img id="result_teamA_img" src="display/alt.png" alt="Team A Logo" style="width:300px; height:300px; object-fit:contain; background:#fff; border-radius:12px; padding:10px;">
+          <div id="result_teamA_sets" style="font-size:60px; font-weight:bold; color:#ffd84d;">0</div>
+        </div>
+
+        <div style="flex:1; min-width:650px; display:flex; flex-direction:column; align-items:center; gap:12px;">
+          <div style="width:100%; border:2px solid #2a3f66; border-radius:12px; overflow:hidden;">
+            <div style="display:flex; align-items:center; padding:40px 20px; background:#162a52; font-weight:bold; text-transform:uppercase; font-size:25px;">
+              <span id="result_teamA_name" style="flex:1; text-align:center;"></span>
+              <span style="width:200px; text-align:center; letter-spacing:2px;">SET</span>
+              <span id="result_teamB_name" style="flex:1; text-align:center;"></span>
+            </div>
+            <div id="result_insertSetScores">
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1; min-width:240px; display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div id="result_teamB_status"></div>
+          <img id="result_teamB_img" src="display/alt.png" alt="Team B Logo" style="width:300px; height:300px; object-fit:contain; background:#fff; border-radius:12px; padding:10px;">
+          <div id="result_teamB_sets" style="font-size:60px; font-weight:bold; color:#ffd84d;">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script src="script/jquery.min.js"></script>
 
@@ -198,10 +230,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       type: 'POST',
       dataType: 'json',
       success: function(response) {
-        $('#teamAImage').attr('src', response.teamA_img ?? 'images/alt.png');
+        $('#teamAImage').attr('src', response.teamA_img ?? 'display/alt.png');
         $('#teamA_name').text(response.teamA_name ?? 'Team A');
 
-        $('#teamBImage').attr('src', response.teamB_img ?? 'images/alt.png');
+        $('#teamBImage').attr('src', response.teamB_img ?? 'display/alt.png');
         $('#teamB_name').text(response.teamB_name ?? 'Team B');
 
         $('#teamA_score').text(response.teamA_score);
@@ -226,9 +258,48 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
+        if (response.endGame == 1) {
 
-        if (response.display1 == 1) {
+          $('#result_teamA_name').text(response.teamA_name ?? 'Team A');
+          $('#result_teamB_name').text(response.teamB_name ?? 'Team B');
 
+          $('#result_teamA_img').attr('src', response.teamA_img ?? 'display/alt.png');
+          $('#result_teamB_img').attr('src', response.teamB_img ?? 'display/alt.png');
+
+          $('#result_teamA_sets').text(response.teamA_set ?? 0);
+          $('#result_teamB_sets').text(response.teamB_set ?? 0);
+
+          $('#result_teamA_status').html(response.teamA_set > response.teamB_set ? '<div style="font-size:50px; font-weight:bold; color:#4caf50; text-shadow: 2px 2px 5px black;">WINNER</div>' : '<div style="font-size:50px; font-weight:bold; color:#f44336; text-shadow: 2px 2px 5px black;">LOSER</div>');
+          $('#result_teamB_status').html(response.teamB_set > response.teamA_set ? '<div style="font-size:50px; font-weight:bold; color:#4caf50; text-shadow: 2px 2px 5px black;">WINNER</div>' : '<div style="font-size:50px; font-weight:bold; color:#f44336; text-shadow: 2px 2px 5px black;">LOSER</div>');
+
+          var currentSet = parseInt(response.setNumber);
+          var elemetContent = '';
+          for (let i = 1; i <= currentSet; i++) {
+            elemetContent += `
+              <div style="display:flex; align-items:center; padding:35px 20px; background:${i % 2 === 1 ? '#0e234a' : '#0b1f42'}; font-weight:bold; font-size:35px;">
+                <span id="result_set1_left" style="flex:1; text-align:center;">${response['teamA_set' + i]}</span>
+                <span style="width:200px; text-align:center;">S${i}</span>
+                <span id="result_set1_right" style="flex:1; text-align:center;">${response['teamB_set' + i]}</span>
+              </div>
+            `;
+          }
+          $('#result_insertSetScores').html(elemetContent);
+
+
+          $('#display_results').show();
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_video').hide();
+          $('#display_camera').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
+
+        } else if (response.display1 == 1) {
+
+          $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').show();
           $('#display_video').hide();
@@ -241,6 +312,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         } else if (response.display2 == 1) {
 
+          $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').hide();
           $('#display_video').show();
@@ -253,6 +325,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         } else if (response.display3 == 1) {
 
+          $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').hide();
           $('#display_video').hide();
@@ -265,6 +338,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         } else {
 
+          $('#display_results').hide();
           $('#display_score').show();
           $('#display_poster').hide();
           $('#display_video').hide();

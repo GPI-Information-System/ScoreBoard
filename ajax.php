@@ -41,6 +41,8 @@ if ($action === 'fetchingRecords') {
       'display2'       => $row['display2'],
       'display3'       => $row['display3'],
 
+      'endGame'        => $row['endGame'],
+
       'timer'          => $row['timer'],
       'setNumber'      => $row['setNumber']
     );
@@ -209,19 +211,19 @@ if ($action === 'timer') {
 if ($action === 'display1') {
   $display = $_POST['display'];
 
-  mysqli_query($conn, "UPDATE ingame_record SET display1='$display', display2=0, display3=0 WHERE id=1");
+  mysqli_query($conn, "UPDATE ingame_record SET display1='$display', display2=0, display3=0, endGame=0 WHERE id=1");
 }
 
 if ($action === 'display2') {
   $display = $_POST['display'];
 
-  mysqli_query($conn, "UPDATE ingame_record SET display1=0, display2='$display', display3=0 WHERE id=1");
+  mysqli_query($conn, "UPDATE ingame_record SET display1=0, display2='$display', display3=0, endGame=0 WHERE id=1");
 }
 
 if ($action === 'display3') {
   $display = $_POST['display'];
 
-  mysqli_query($conn, "UPDATE ingame_record SET display1=0, display2=0, display3='$display' WHERE id=1");
+  mysqli_query($conn, "UPDATE ingame_record SET display1=0, display2=0, display3='$display', endGame=0 WHERE id=1");
 }
 
 if ($action === 'resetDetails') {

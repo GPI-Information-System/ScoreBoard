@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Volleyball Results</title>
-  <link rel="icon" href="images/volleyball.png">
+  <link rel="icon" href="display/ball.png">
   <link rel="stylesheet" href="datatable/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="datatable/bootstrap.min.css">
   <link rel="stylesheet" href="style/result.css">
@@ -85,7 +85,6 @@
           </tbody>
         </table>
 
-        <div class="table-tip">Tip: Scroll horizontally on smaller screens.</div>
       </div>
     </div>
   </div>

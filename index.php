@@ -11,7 +11,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Volleyball Board Controller</title>
-  <link rel="icon" href="images/volleyball.png">
+  <link rel="icon" href="display/ball.png">
   <link rel="stylesheet" href="style/style.css">
 </head>
 
@@ -21,7 +21,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="images/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="display/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -372,7 +372,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       <div class="team-panel">
 
         <div class="team-picture" style="width: 300px; height: 200px; padding: 1px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="images/alt.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          <img src="display/alt.png" id="teamBImage" alt="Image not available" style="max-width: 100%; max-height: 100%; object-fit: contain;">
         </div>
 
         <!-- <div class="team-picture" style="width:300px; height:200px; overflow: hidden;">
@@ -503,12 +503,12 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   $(document).ready(function() {
     var records = <?= json_encode($records) ?>;
 
-    $('#teamAImage').attr('src', records['teamA_img'] ?? 'images/alt.png');
+    $('#teamAImage').attr('src', records['teamA_img'] ?? 'display/alt.png');
     $('#teamA_name').val(records['teamA_name']);
     $('#teamA_score').text(records['teamA_score']);
     $('#teamA_scoreSet').text(records['teamA_set']);
 
-    $('#teamBImage').attr('src', records['teamB_img'] ?? 'images/alt.png');
+    $('#teamBImage').attr('src', records['teamB_img'] ?? 'display/alt.png');
     $('#teamB_name').val(records['teamB_name']);
     $('#teamB_score').text(records['teamB_score']);
     $('#teamB_scoreSet').text(records['teamB_set']);
