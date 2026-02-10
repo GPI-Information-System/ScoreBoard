@@ -164,7 +164,301 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     <div style="
       width: 100vw;
       height: 100vh;
+      background: linear-gradient(135deg, #1a1f3a 0%, #2a3050 50%, #1d2b3a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;">
+
+      <!-- Animated background elements -->
+      <div style="
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(233, 194, 24, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -150px;
+        left: -150px;
+        animation: pulse 6s ease-in-out infinite;">
+      </div>
+      <div style="
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(55, 88, 222, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -150px;
+        right: -150px;
+        animation: pulse 6s ease-in-out infinite 2s;">
+      </div>
+
+      <div class="clock-section" style="position: absolute; margin-top: -600px; ">
+        <!-- <div style="background: #000;"> -->
+        <div class="clock-display" id="versus_timer">00:00</div>
+        <!-- </div> -->
+      </div>
+
+      <!-- Main content -->
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 1400px;
+        gap: 60px;
+        position: relative;
+        z-index: 1;">
+
+        <!-- Team A -->
+        <div style="
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
+          animation: slideInLeft 0.8s ease-out;">
+
+          <div style="
+            position: relative;
+            width: 320px;
+            height: 320px;">
+            <div id="versus_teamA_glow" style="
+              position: absolute;
+              inset: -8px;
+              background: linear-gradient(135deg, #e9c218 0%, #ffd84d 100%);
+              border-radius: 24px;
+              animation: borderPulse 3s ease-in-out infinite;
+              z-index: -1;">
+            </div>
+            <img id="versus_teamA_img" src="display/alt.png" alt="Team A" style="
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              background: rgba(10, 14, 39, 0.8);
+              border-radius: 24px;
+              padding: 20px;
+              box-sizing: border-box;
+              transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+              cursor: pointer;
+              filter: drop-shadow(0 15px 40px rgba(233, 194, 24, 0.4));">
+          </div>
+
+          <div id="versus_teamA_name" style="
+            font-size: 56px;
+            font-weight: 900;
+            color: #e9c218;
+            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
+            text-align: center;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            text-transform: uppercase;">
+          </div>
+        </div>
+
+        <!-- Header -->
+        <!-- <div style=" 
+          position: absolute;
+          top: 40px;
+          font-size: 32px;
+          font-weight: bold;
+          color: #e9c218;
+          text-shadow: 3px 3px 10px rgba(0,0,0,0.9);
+          letter-spacing: 3px;
+          z-index: 2;">
+          CHAMPIONSHIP MATCH
+        </div> -->
+
+        <!-- Center divider -->
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 30px;
+          position: relative;
+          z-index: 2;">
+
+          <div style="
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #e9c218 0%, #ffd84d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(233, 194, 24, 0.5);
+            letter-spacing: 4px;
+            animation: pulse 2s ease-in-out infinite;
+            line-height: 1;">
+            VS
+          </div>
+        </div>
+
+        <!-- Team B -->
+        <div style="
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
+          animation: slideInRight 0.8s ease-out;">
+
+          <div style="
+            position: relative;
+            width: 320px;
+            height: 320px;">
+            <div id="versus_teamB_glow" style="
+              position: absolute;
+              inset: -8px;
+              background: linear-gradient(135deg, #3758de 0%, #5770ff 100%);
+              border-radius: 24px;
+              animation: borderPulse 3s ease-in-out infinite 1.5s;
+              z-index: -1;">
+            </div>
+            <img id="versus_teamB_img" src="display/alt.png" alt="Team B" style="
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              background: rgba(10, 14, 39, 0.8);
+              border-radius: 24px;
+              padding: 20px;
+              box-sizing: border-box;
+              transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+              cursor: pointer;
+              filter: drop-shadow(0 15px 40px rgba(55, 88, 222, 0.4));">
+          </div>
+
+          <div id="versus_teamB_name" style="
+            font-size: 56px;
+            font-weight: 900;
+            color: #5770ff;
+            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
+            text-align: center;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            text-transform: uppercase;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="
+        position: absolute;
+        bottom: 40px;
+        font-size: 24px;
+        color: #fff;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+        letter-spacing: 2px;
+        animation: fadeInUp 1s ease-out 0.6s both;">
+        GET READY FOR THE MATCH
+      </div>
+    </div>
+
+    <style>
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-150px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(150px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        50% {
+          transform: scale(1.05);
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes borderPulse {
+
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(233, 194, 24, 0.5);
+          transform: scale(1);
+        }
+
+        50% {
+          box-shadow: 0 0 40px rgba(233, 194, 24, 0.8);
+          transform: scale(1.02);
+        }
+      }
+
+      @keyframes dotPulse {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.6;
+        }
+
+        50% {
+          transform: scale(1.3);
+          opacity: 1;
+        }
+      }
+
+      @keyframes heightPulse {
+
+        0%,
+        100% {
+          height: 80px;
+        }
+
+        50% {
+          height: 120px;
+        }
+      }
+    </style>
+  </div>
+
+  <!-- <div id="display_versus" style="display: none;">
+    <div style="
+      width: 100vw;
+      height: 100vh;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      background-image: url('display/versus.png');
+      background-size: contain;      
+      background-position: center;   
+      background-repeat: no-repeat; 
+      background-color: #000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -173,7 +467,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       position: relative;
       overflow: hidden;">
 
-      <!-- Animated Background Elements -->
       <div style="
         position: absolute;
         width: 400px;
@@ -203,94 +496,42 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         max-width: 1200px;
         gap: 40px;
         position: relative;
-        z-index: 1;">
+        z-index: 1; padding-top: 175px;">
 
-        <!-- Team A -->
         <div style="
+          margin-left: -50px;
           flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 20px;
           animation: slideInLeft 0.8s ease-out;">
-          <img id="versus_teamA_img" src="images/team_A_1770688728.png" alt="Team A" style="
+          <img id="versus_teamA_img" src="images/shark.png" alt="Team A" style="
             width: 300px;
             height: 300px;
             object-fit: contain;
-            background: rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 20px;
-            border: 4px solid #e9c218;
-            box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer;"
-            onmouseover="this.style.transform='scale(1.05) rotateY(-5deg)'; this.style.boxShadow='0 20px 60px rgba(233, 194, 24, 0.6)'"
-            onmouseout="this.style.transform='scale(1) rotateY(0)'; this.style.boxShadow='0 10px 40px rgba(233, 194, 24, 0.3)'">
-          <div id="versus_teamA_name" style="
-            font-size: 48px;
-            font-weight: bold;
-            color: #e9c218;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
-            text-align: center;
-            letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out 0.3s both;">
-            Team A
-          </div>
+            cursor: pointer;">
         </div>
 
-        <!-- VS -->
         <div style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;">
-          <div style="
-            font-size: 80px;
-            font-weight: bold;
-            color: #e9c218;
-            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
-            letter-spacing: 3px;
-            animation: pulse 2s ease-in-out infinite;">
-            VS
-          </div>
-          <div style="
-            font-size: 24px;
-            color: #fff;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);">
-          </div>
-        </div>
-
-        <!-- Team B -->
-        <div style="
+          margin-left: 650px;
           flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 20px;
           animation: slideInRight 0.8s ease-out;">
-          <img id="versus_teamB_img" src="images/team_B_1770688732.png" alt="Team B" style="
+          <img id="versus_teamB_img" src="images/tiger.png" alt="Team B" style="
             width: 300px;
             height: 300px;
             object-fit: contain;
-            background: rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 20px;
-            border: 4px solid #e9c218;
-            box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer;"
-            onmouseover="this.style.transform='scale(1.05) rotateY(5deg)'; this.style.boxShadow='0 20px 60px rgba(233, 194, 24, 0.6)'"
-            onmouseout="this.style.transform='scale(1) rotateY(0)'; this.style.boxShadow='0 10px 40px rgba(233, 194, 24, 0.3)'">
-          <div id="versus_teamB_name" style="
-            font-size: 48px;
-            font-weight: bold;
-            color: #e9c218;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
-            text-align: center;
-            letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out 0.3s both;">
-            Team B
-          </div>
+            cursor: pointer;">
         </div>
       </div>
     </div>
@@ -346,7 +587,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         }
       }
     </style>
-  </div>
+  </div> -->
 
   <div id="display_camera" style="display: block;">
     <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative; overflow: hidden;">
@@ -428,6 +669,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 <script>
   $(document).ready(function() {
     setInterval(counter, 1000);
+    initDominantColors();
   });
 
   var isCameraDisplay = false;
@@ -466,7 +708,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
-        if (response.endGame == 1) {
+        if (response.endGame == 1) { // Display Results
 
           $('#result_teamA_name').text(response.teamA_name ?? 'Team A');
           $('#result_teamB_name').text(response.teamB_name ?? 'Team B');
@@ -504,7 +746,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
-        } else if (response.display1 == 1) {
+        } else if (response.display1 == 1) { // Display Poster
 
           $('#display_results').hide();
           $('#display_score').hide();
@@ -517,7 +759,15 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
-        } else if (response.display2 == 1) {
+        } else if (response.display2 == 1) { // Display Versus
+
+          $('#versus_teamA_name').text(response.teamA_name ?? 'Team A');
+          $('#versus_teamB_name').text(response.teamB_name ?? 'Team B');
+
+          $('#versus_teamA_img').attr('src', response.teamA_img ?? 'display/alt.png');
+          $('#versus_teamB_img').attr('src', response.teamB_img ?? 'display/alt.png');
+
+          $('#versus_timer').text(response.timer);
 
           $('#display_results').hide();
           $('#display_score').hide();
@@ -530,7 +780,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
-        } else if (response.display3 == 1) {
+        } else if (response.display3 == 1) { // Display Camera
 
           $('#display_results').hide();
           $('#display_score').hide();
@@ -607,5 +857,112 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     }
     context_canvas.clearRect(0, 0, canvas.width, canvas.height);
     video.srcObject = null;
+  }
+
+
+  function initDominantColors() {
+    var targets = [{
+        imgId: 'versus_teamA_img',
+        glowId: 'versus_teamA_glow',
+        nameId: 'versus_teamA_name'
+      },
+      {
+        imgId: 'versus_teamB_img',
+        glowId: 'versus_teamB_glow',
+        nameId: 'versus_teamB_name'
+      }
+    ];
+
+    targets.forEach(function(target) {
+      var img = document.getElementById(target.imgId);
+      var glow = document.getElementById(target.glowId);
+      var nameEl = document.getElementById(target.nameId);
+
+      if (!img || !glow) {
+        return;
+      }
+
+      var apply = function() {
+        applyDominantFrame(img, glow, nameEl);
+      };
+
+      if (img.complete) {
+        apply();
+      }
+
+      img.addEventListener('load', apply);
+    });
+  }
+
+  function applyDominantFrame(img, glowEl, nameEl) {
+    var color = getDominantColor(img);
+    var accent = lightenColor(color, 0.35);
+    var c1 = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
+    var c2 = 'rgb(' + accent.r + ',' + accent.g + ',' + accent.b + ')';
+
+    glowEl.style.background = 'linear-gradient(135deg, ' + c1 + ' 0%, ' + c2 + ' 100%)';
+    glowEl.style.boxShadow = '0 0 30px rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.65)';
+    img.style.filter = 'drop-shadow(0 15px 40px rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.4))';
+    if (nameEl) {
+      nameEl.style.color = c1;
+    }
+  }
+
+  function getDominantColor(img) {
+    try {
+      var canvas = document.createElement('canvas');
+      var size = 40;
+      canvas.width = size;
+      canvas.height = size;
+      var ctx = canvas.getContext('2d', {
+        willReadFrequently: true
+      });
+      ctx.drawImage(img, 0, 0, size, size);
+      var data = ctx.getImageData(0, 0, size, size).data;
+
+      var r = 0;
+      var g = 0;
+      var b = 0;
+      var count = 0;
+
+      for (var i = 0; i < data.length; i += 4) {
+        var alpha = data[i + 3];
+        if (alpha < 10) {
+          continue;
+        }
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count += 1;
+      }
+
+      if (!count) {
+        return {
+          r: 233,
+          g: 194,
+          b: 24
+        };
+      }
+
+      return {
+        r: Math.round(r / count),
+        g: Math.round(g / count),
+        b: Math.round(b / count)
+      };
+    } catch (error) {
+      return {
+        r: 233,
+        g: 194,
+        b: 24
+      };
+    }
+  }
+
+  function lightenColor(color, amount) {
+    return {
+      r: Math.round(color.r + (255 - color.r) * amount),
+      g: Math.round(color.g + (255 - color.g) * amount),
+      b: Math.round(color.b + (255 - color.b) * amount)
+    };
   }
 </script>
