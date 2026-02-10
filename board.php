@@ -160,18 +160,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
-  <!-- <div id="display_video">
-    <video id="video_poster"
-      playsinline
-      autoplay
-      loop
-      width="100%"
-      height="100%"
-      poster="display/sample.mp4">
-      <source src="display/sample.mp4" type="video/mp4">
-    </video>
-  </div> -->
-
   <div id="display_versus" style="display: none;">
     <div style="
       width: 100vw;
@@ -360,9 +348,30 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </style>
   </div>
 
-  <div id="display_camera" style="display: none;">
-    <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
-      <canvas id="canvas" style="border: 2px solid black; width: 1200px; height: 600px;"></canvas>
+  <div id="display_camera" style="display: block;">
+    <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative; overflow: hidden;">
+
+      <!-- Top SMILE CAM -->
+      <div style="position: absolute; top: 40px; font-size: 36px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite;">
+        😊 😊 SMILE CAM 😊 😊
+      </div>
+
+      <!-- Left SMILE CAM -->
+      <div style="position: absolute; left: 40px; font-size: 36px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite; text-align: center; line-height: 1.2;">
+        😊<br>S<br>M<br>I<br>L<br>E<br><br>C<br>A<br>M<br>😊
+      </div>
+
+      <!-- Right SMILE CAM -->
+      <div style="position: absolute; right: 40px; font-size: 36px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite; text-align: center; line-height: 1.2;">
+        😊<br>S<br>M<br>I<br>L<br>E<br><br>C<br>A<br>M<br>😊
+      </div>
+
+      <canvas id="canvas" style="border: 4px solid #e9c218; width: 1200px; height: 600px; border-radius: 20px; box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);"></canvas>
+
+      <!-- Bottom SMILE CAM -->
+      <div style="position: absolute; bottom: 40px; font-size: 48px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite;">
+        😊 😊 SMILE CAM 😊 😊
+      </div>
     </div>
   </div>
 
@@ -398,6 +407,17 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
+  <!-- <div id="display_video">
+    <video id="video_poster"
+      playsinline
+      autoplay
+      loop
+      width="100%"
+      height="100%"
+      poster="display/sample.mp4">
+      <source src="display/sample.mp4" type="video/mp4">
+    </video>
+  </div> -->
 
   <script src="script/jquery.min.js"></script>
 
@@ -407,7 +427,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <script>
   $(document).ready(function() {
-    // setInterval(counter, 1000);
+    setInterval(counter, 1000);
   });
 
   var isCameraDisplay = false;
@@ -472,7 +492,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             `;
           }
           $('#result_insertSetScores').html(elemetContent);
-
 
           $('#display_results').show();
           $('#display_score').hide();
