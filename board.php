@@ -789,8 +789,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').show();
 
           if (!isCameraDisplay) {
-            startCamera();
+            startCamera(response.camera_device ?? null);
             isCameraDisplay = true;
+          } else if (response.camera_device && response.camera_device !== currentDeviceId) {
+            startCamera(response.camera_device);
           }
 
         } else {
@@ -818,24 +820,48 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   const context_canvas = canvas.getContext('2d');
   let display_cam;
   let video;
+  let currentDeviceId = null;
 
-  function startCamera() {
-    navigator.mediaDevices.getUserMedia({
-      video: true
-    }).then(stream => {
+  function startCamera(deviceId) {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      return;
+    }
+
+    if (display_cam) {
+      stopCamera();
+    }
+
+    const constraints = {
+      video: deviceId ? {
+        deviceId: {
+          exact: deviceId
+        }
+      } : true
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints).then(stream => {
       display_cam = stream;
+      currentDeviceId = deviceId || stream.getVideoTracks()[0]?.getSettings?.().deviceId || null;
       video = document.createElement('video');
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.autoplay = true;
       video.srcObject = display_cam;
-      video.play();
+      video.play().catch(() => {});
 
       video.onloadedmetadata = () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth || 1280;
+        canvas.height = video.videoHeight || 720;
         draw(video);
       };
     }).catch(error => {
       console.error('Error accessing camera:', error);
-      // Display error message on canvas
+      if (deviceId) {
+        startCamera(null);
+        return;
+      }
+
       canvas.width = 640;
       canvas.height = 480;
       context_canvas.font = '20px Arial';
@@ -857,6 +883,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     }
     context_canvas.clearRect(0, 0, canvas.width, canvas.height);
     video.srcObject = null;
+    currentDeviceId = null;
   }
 
 

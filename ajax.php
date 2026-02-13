@@ -41,6 +41,8 @@ if ($action === 'fetchingRecords') {
       'display2'       => $row['display2'],
       'display3'       => $row['display3'],
 
+      'camera_device'  => $row['camera_device'],
+
       'endGame'        => $row['endGame'],
 
       'timer'          => $row['timer'],
@@ -226,10 +228,16 @@ if ($action === 'display3') {
   mysqli_query($conn, "UPDATE ingame_record SET display1=0, display2=0, display3='$display', endGame=0 WHERE id=1");
 }
 
+if ($action === 'camera_device') {
+  $device = $_POST['device'];
+
+  mysqli_query($conn, "UPDATE ingame_record SET camera_device='$device' WHERE id=1");
+}
+
 if ($action === 'resetDetails') {
   $display = $_POST['display'];
 
-  mysqli_query($conn, "UPDATE ingame_record SET teamA_name=null, teamA_img=null, teamA_score=0, teamA_set=0, teamA_timeout1=0, teamA_timeout2=0, teamA_serving=0, teamA_set1=null, teamA_set2=null, teamA_set3=null, teamA_set4=null, teamA_set5=null, teamB_name=null, teamB_img=null, teamB_score=0, teamB_set=0, teamB_timeout1=0, teamB_timeout2=0, teamB_serving=0, teamB_set1=null, teamB_set2=null, teamB_set3=null, teamB_set4=null, teamB_set5=null, display1=0, display2=0, display3=0, timer='00:00', setNumber=1, endGame=0 WHERE id=1");
+  mysqli_query($conn, "UPDATE ingame_record SET teamA_name=null, teamA_img=null, teamA_score=0, teamA_set=0, teamA_timeout1=0, teamA_timeout2=0, teamA_serving=0, teamA_set1=null, teamA_set2=null, teamA_set3=null, teamA_set4=null, teamA_set5=null, teamB_name=null, teamB_img=null, teamB_score=0, teamB_set=0, teamB_timeout1=0, teamB_timeout2=0, teamB_serving=0, teamB_set1=null, teamB_set2=null, teamB_set3=null, teamB_set4=null, teamB_set5=null, display1=0, display2=0, display3=0, timer='00:00', setNumber=1, endGame=0, camera_device=null WHERE id=1");
 }
 
 if ($action === 'nextSet') {

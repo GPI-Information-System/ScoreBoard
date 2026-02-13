@@ -113,6 +113,18 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       </div>
 
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 150px; padding: 10px 15px 15px 10px; display: flex; align-items: center; justify-content: center;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: 10px;">
+          <label for="cameraSelectIndex" style="font-size: 14px; font-weight: 700; color: #111827;">Camera</label>
+          <select id="cameraSelectIndex" style="max-width: 100px; padding: 6px 10px; border-radius: 8px; border: 1px solid #9ca3af; background: #fff; color: #111827; font-size: 14px;">
+            <option value="" disabled selected>Loading cameras...</option>
+          </select>
+          <button id="cameraRefreshIndex" type="button"
+            style="padding: 6px 10px; border-radius: 8px; border: 1px solid #111827; background: #f3f4f6; color: #111827; font-size: 12px; font-weight: 700; cursor: pointer;">Refresh</button>
+          <span id="cameraStatusIndex" style="font-size: 12px; color: #374151;"></span>
+        </div>
+      </div>
+
       <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px;">
 
         <audio src="audios/Hawks.mp3" id="sound1_sound" preload="auto"></audio>
@@ -500,6 +512,8 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 </html>
 
 <script>
+  let initialCameraDeviceId = null;
+
   $(document).ready(function() {
     var records = <?= json_encode($records) ?>;
 
@@ -519,6 +533,9 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     $('#timeoutB1').prop('checked', (records['teamB_timeout1'] == 1 ? true : false));
     $('#timeoutB2').prop('checked', (records['teamB_timeout2'] == 1 ? true : false));
     $('#setNumber').text(records['setNumber']);
+
+    initialCameraDeviceId = records['camera_device'] ?? null;
+    loadCameraDevicesIndex(false);
   });
 
   $('#teamA_name').on('blur', function() {
@@ -1033,6 +1050,115 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   $('#buzzer_btn').on('click', function() {
     playBuzzer();
   });
+
+  const cameraSelectIndex = document.getElementById('cameraSelectIndex');
+  const cameraRefreshIndex = document.getElementById('cameraRefreshIndex');
+  const cameraStatusIndex = document.getElementById('cameraStatusIndex');
+
+  function setCameraStatusIndex(message, isError) {
+    cameraStatusIndex.textContent = message || '';
+    cameraStatusIndex.style.color = isError ? '#b91c1c' : '#374151';
+  }
+
+  async function ensureCameraPermission() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setCameraStatusIndex('Camera access not supported by this browser.', true);
+      return false;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true
+      });
+      stream.getTracks().forEach(track => track.stop());
+      return true;
+    } catch (error) {
+      console.error('Camera permission error:', error);
+      setCameraStatusIndex('Camera permission denied. Use HTTPS or localhost.', true);
+      return false;
+    }
+  }
+
+  async function loadCameraDevicesIndex(requestPermission) {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      setCameraStatusIndex('Camera list not supported by this browser.', true);
+      return;
+    }
+
+    if (requestPermission) {
+      const ok = await ensureCameraPermission();
+      if (!ok) {
+        return;
+      }
+    }
+
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      cameraSelectIndex.innerHTML = '';
+
+      if (videoDevices.length === 0) {
+        const option = document.createElement('option');
+        option.textContent = 'No camera found';
+        option.disabled = true;
+        option.selected = true;
+        cameraSelectIndex.appendChild(option);
+        setCameraStatusIndex('No camera devices detected.', true);
+        return;
+      }
+
+      let hasLabels = false;
+      videoDevices.forEach((device, index) => {
+        const option = document.createElement('option');
+        option.value = device.deviceId;
+        option.textContent = device.label || 'Camera ' + (index + 1);
+        if (device.label) {
+          hasLabels = true;
+        }
+        cameraSelectIndex.appendChild(option);
+      });
+
+      const defaultDeviceId = initialCameraDeviceId || videoDevices[0].deviceId;
+      cameraSelectIndex.value = defaultDeviceId;
+
+      if (!hasLabels) {
+        setCameraStatusIndex('Click Refresh to allow camera access and show names.', false);
+      } else {
+        setCameraStatusIndex('Select a camera for the board display.', false);
+      }
+    } catch (error) {
+      console.error('Error listing cameras:', error);
+      setCameraStatusIndex('Unable to list cameras. Check permissions.', true);
+    }
+  }
+
+  cameraSelectIndex.addEventListener('change', function() {
+    const nextDeviceId = this.value;
+    if (!nextDeviceId) {
+      return;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=camera_device',
+      type: 'POST',
+      data: {
+        device: nextDeviceId
+      },
+      success: function() {
+        initialCameraDeviceId = nextDeviceId;
+        setCameraStatusIndex('Camera selection saved.', false);
+      },
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  });
+
+  cameraRefreshIndex.addEventListener('click', function() {
+    loadCameraDevicesIndex(true);
+  });
+
 
 
   function setActiveFeature(btn, active) {
