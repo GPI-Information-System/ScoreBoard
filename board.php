@@ -555,17 +555,47 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
-  <!-- <div id="display_video">
-    <video id="video_poster"
-      playsinline
-      autoplay
-      loop
-      width="100%"
-      height="100%"
-      poster="display/sample.mp4">
-      <source src="display/sample.mp4" type="video/mp4">
-    </video>
-  </div> -->
+  <div id="display_winner" style="display: none;">
+    <div class="winner-screen">
+      <canvas id="winner_fireworks" class="winner-fireworks" aria-hidden="true"></canvas>
+      <div id="winner_confetti" class="winner-confetti" aria-hidden="true"></div>
+      <div class="winner-bg-glow winner-bg-glow-left"></div>
+      <div class="winner-bg-glow winner-bg-glow-right"></div>
+
+      <div class="winner-heading">GPI VOLLEYBALL LEAGUE</div>
+
+      <div class="winner-podium-wrap">
+        <div class="winner-rank-col winner-rank-second">
+          <div class="winner-team-card">
+            <div class="winner-rank-chip rank-silver">2nd Place</div>
+            <img src="picture/second.png" alt="Rank 2 Team" class="winner-team-logo">
+            <div class="winner-team-name">TEAM 2</div>
+          </div>
+          <div class="winner-podium-step step-second"><span>2</span></div>
+        </div>
+
+        <div class="winner-rank-col winner-rank-first">
+          <div class="winner-team-card winner-team-champion">
+            <div class="winner-rank-chip rank-gold">CHAMPION</div>
+            <img src="picture/first.png" alt="Rank 1 Team" class="winner-team-logo">
+            <div class="winner-team-name">TEAM 1</div>
+          </div>
+          <div class="winner-podium-step step-first"><span>1</span></div>
+        </div>
+
+        <div class="winner-rank-col winner-rank-third">
+          <div class="winner-team-card">
+            <div class="winner-rank-chip rank-bronze">3rd Place</div>
+            <img src="picture/third.png" alt="Rank 3" class="winner-team-logo">
+            <div class="winner-team-name">TEAM 3</div>
+          </div>
+          <div class="winner-podium-step step-third"><span>3</span></div>
+        </div>
+
+        <div class="winner-podium-base" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="script/jquery.min.js"></script>
 
@@ -575,6 +605,8 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <script>
   $(document).ready(function() {
+    initWinnerConfetti();
+    initWinnerFireworks();
     setInterval(counter, 1000);
     initDominantColors();
   });
@@ -615,6 +647,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
+        if (response.display5 != 1) {
+          stopWinnerFireworks();
+        }
+
         if (response.endGame == 1) { // Display Results
 
           $('#result_teamA_name').text(response.teamA_name ?? 'Team A');
@@ -648,6 +684,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').hide();
           $('#display_camera').hide();
           $('#display_smile').hide();
+          $('#display_winner').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -662,6 +699,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').hide();
           $('#display_camera').hide();
           $('#display_smile').hide();
+          $('#display_winner').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -684,6 +722,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').show();
           $('#display_camera').hide();
           $('#display_smile').hide();
+          $('#display_winner').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -698,6 +737,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').hide();
           $('#display_camera').show();
           $('#display_smile').hide();
+          $('#display_winner').hide();
 
           if (!isCameraDisplay) {
             startCamera(response.camera_device ?? null);
@@ -714,6 +754,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').hide();
           $('#display_camera').hide();
           $('#display_smile').show();
+          $('#display_winner').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -722,12 +763,16 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         } else if (response.display5 == 1) { // Display Team Winner
 
+          initWinnerConfetti();
+          startWinnerFireworks();
+
           $('#display_results').hide();
           $('#display_score').hide();
           $('#display_poster').hide();
           $('#display_versus').hide();
           $('#display_camera').hide();
           $('#display_smile').hide();
+          $('#display_winner').show();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -742,6 +787,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_versus').hide();
           $('#display_camera').hide();
           $('#display_smile').hide();
+          $('#display_winner').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -826,6 +872,158 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     currentDeviceId = null;
   }
 
+  function initWinnerConfetti() {
+    var confettiEl = document.getElementById('winner_confetti');
+    if (!confettiEl || confettiEl.children.length > 0) {
+      return;
+    }
+
+    var colors = ['#ffd84d', '#ff6f61', '#3ddc97', '#4ea5ff', '#ffffff', '#ff8fab'];
+    var count = 64;
+
+    for (var i = 0; i < count; i++) {
+      var piece = document.createElement('span');
+      var x = Math.random() * 100;
+      var dur = (Math.random() * 2.8 + 3.5).toFixed(2) + 's';
+      var delay = (Math.random() * 3.8 * -1).toFixed(2) + 's';
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      var width = Math.floor(Math.random() * 8) + 6;
+      var height = Math.floor(Math.random() * 16) + 12;
+
+      piece.className = 'winner-confetti-piece';
+      piece.style.setProperty('--x', x.toFixed(2));
+      piece.style.setProperty('--dur', dur);
+      piece.style.setProperty('--delay', delay);
+      piece.style.setProperty('--color', color);
+      piece.style.width = width + 'px';
+      piece.style.height = height + 'px';
+      piece.style.opacity = (Math.random() * 0.35 + 0.6).toFixed(2);
+
+      confettiEl.appendChild(piece);
+    }
+  }
+
+  var winnerFireworksCanvas = null;
+  var winnerFireworksCtx = null;
+  var winnerFireworksRunning = false;
+  var winnerFireworksRafId = null;
+  var winnerFireworksLastBurst = 0;
+  var winnerFireworkParticles = [];
+
+  function initWinnerFireworks() {
+    winnerFireworksCanvas = document.getElementById('winner_fireworks');
+    if (!winnerFireworksCanvas) {
+      return;
+    }
+
+    winnerFireworksCtx = winnerFireworksCanvas.getContext('2d');
+    resizeWinnerFireworksCanvas();
+    window.addEventListener('resize', resizeWinnerFireworksCanvas);
+  }
+
+  function resizeWinnerFireworksCanvas() {
+    if (!winnerFireworksCanvas) {
+      return;
+    }
+    var dpr = window.devicePixelRatio || 1;
+    var w = winnerFireworksCanvas.clientWidth;
+    var h = winnerFireworksCanvas.clientHeight;
+    winnerFireworksCanvas.width = Math.floor(w * dpr);
+    winnerFireworksCanvas.height = Math.floor(h * dpr);
+    if (winnerFireworksCtx) {
+      winnerFireworksCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+
+  function startWinnerFireworks() {
+    if (!winnerFireworksCtx || winnerFireworksRunning) {
+      return;
+    }
+    winnerFireworksRunning = true;
+    winnerFireworksLastBurst = performance.now();
+    renderWinnerFireworks(performance.now());
+  }
+
+  function stopWinnerFireworks() {
+    winnerFireworksRunning = false;
+    if (winnerFireworksRafId) {
+      cancelAnimationFrame(winnerFireworksRafId);
+      winnerFireworksRafId = null;
+    }
+    if (winnerFireworksCtx && winnerFireworksCanvas) {
+      winnerFireworksCtx.clearRect(0, 0, winnerFireworksCanvas.clientWidth, winnerFireworksCanvas.clientHeight);
+    }
+    winnerFireworkParticles = [];
+  }
+
+  function spawnWinnerBurst() {
+    if (!winnerFireworksCanvas) {
+      return;
+    }
+    var w = winnerFireworksCanvas.clientWidth;
+    var h = winnerFireworksCanvas.clientHeight;
+    var x = Math.random() * (w * 0.8) + w * 0.1;
+    var y = Math.random() * (h * 0.45) + h * 0.08;
+    var palette = ['#ffd84d', '#ff6666', '#66f2ff', '#8eff8e', '#ffffff', '#c599ff'];
+    var count = 42 + Math.floor(Math.random() * 20);
+
+    for (var i = 0; i < count; i++) {
+      var angle = (Math.PI * 2 * i) / count + Math.random() * 0.25;
+      var speed = Math.random() * 3.2 + 1.4;
+      winnerFireworkParticles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: Math.random() * 38 + 50,
+        maxLife: Math.random() * 38 + 50,
+        size: Math.random() * 2.5 + 1.4,
+        color: palette[Math.floor(Math.random() * palette.length)]
+      });
+    }
+  }
+
+  function renderWinnerFireworks(timestamp) {
+    if (!winnerFireworksRunning || !winnerFireworksCtx || !winnerFireworksCanvas) {
+      return;
+    }
+
+    var ctx = winnerFireworksCtx;
+    var w = winnerFireworksCanvas.clientWidth;
+    var h = winnerFireworksCanvas.clientHeight;
+
+    ctx.fillStyle = 'rgba(6, 13, 30, 0.22)';
+    ctx.fillRect(0, 0, w, h);
+
+    if (timestamp - winnerFireworksLastBurst > 420) {
+      spawnWinnerBurst();
+      winnerFireworksLastBurst = timestamp;
+    }
+
+    for (var i = winnerFireworkParticles.length - 1; i >= 0; i--) {
+      var p = winnerFireworkParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.035;
+      p.vx *= 0.992;
+      p.life -= 1;
+
+      var alpha = Math.max(p.life / p.maxLife, 0);
+      if (alpha <= 0) {
+        winnerFireworkParticles.splice(i, 1);
+        continue;
+      }
+
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    winnerFireworksRafId = requestAnimationFrame(renderWinnerFireworks);
+  }
 
   function initDominantColors() {
     var targets = [{
