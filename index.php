@@ -134,53 +134,20 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         <audio src="audios/Wildcats.mp3" id="sound5_sound" preload="auto"></audio>
         <audio src="audios/Wolves.mp3" id="sound6_sound" preload="auto"></audio>
 
-
-        <button id="sound1"
+        <button id="display4"
           class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
+          Display Smile
         </button>
 
-        <button id="sound2"
+        <button id="display5"
           class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
-        </button>
-
-        <button id="sound3"
-          class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
-          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
-          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
-        </button>
-
-        <button id="sound4"
-          class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
-          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
-          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
-        </button>
-
-        <button id="sound5"
-          class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
-          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
-          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
-        </button>
-
-        <button id="sound6"
-          class="serving-btn"
-          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
-          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
-          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
-          Sound
+          Display Winner
         </button>
 
       </div>
@@ -1179,7 +1146,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   }
 
   function deactivateOthersFeature(exceptId) {
-    ['display1', 'display2', 'display3'].forEach(id => {
+    ['display1', 'display2', 'display3', 'display4', 'display5'].forEach(id => {
       if (id !== exceptId) setActive(document.getElementById(id), false);
     });
   }
@@ -1248,6 +1215,56 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
     $.ajax({
       url: 'ajax.php?action=display3',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  });
+
+  $('#display4').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersFeature('display4');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=display4',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  });
+
+  $('#display5').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersFeature('display5');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=display5',
       type: 'POST',
       data: {
         display: isActive

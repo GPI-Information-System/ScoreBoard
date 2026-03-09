@@ -449,147 +449,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </style>
   </div>
 
-  <!-- <div id="display_versus" style="display: none;">
-    <div style="
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      background-image: url('display/versus.png');
-      background-size: contain;      
-      background-position: center;   
-      background-repeat: no-repeat; 
-      background-color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-      position: relative;
-      overflow: hidden;">
-
-      <div style="
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(233, 194, 24, 0.1) 0%, transparent 70%);
-        border-radius: 50%;
-        top: -100px;
-        left: -100px;
-        animation: pulse 4s ease-in-out infinite;">
-      </div>
-      <div style="
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(233, 194, 24, 0.1) 0%, transparent 70%);
-        border-radius: 50%;
-        bottom: -100px;
-        right: -100px;
-        animation: pulse 4s ease-in-out infinite 2s;">
-      </div>
-
-      <div style="
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        width: 100%;
-        max-width: 1200px;
-        gap: 40px;
-        position: relative;
-        z-index: 1; padding-top: 175px;">
-
-        <div style="
-          margin-left: -50px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;
-          animation: slideInLeft 0.8s ease-out;">
-          <img id="versus_teamA_img" src="images/shark.png" alt="Team A" style="
-            width: 300px;
-            height: 300px;
-            object-fit: contain;
-            border-radius: 20px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;">
-        </div>
-
-        <div style="
-          margin-left: 650px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;
-          animation: slideInRight 0.8s ease-out;">
-          <img id="versus_teamB_img" src="images/tiger.png" alt="Team B" style="
-            width: 300px;
-            height: 300px;
-            object-fit: contain;
-            border-radius: 20px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;">
-        </div>
-      </div>
-    </div>
-
-    <style>
-      @keyframes slideInLeft {
-        from {
-          opacity: 0;
-          transform: translateX(-100px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(100px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes pulse {
-
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 0.5;
-        }
-
-        50% {
-          transform: scale(1.1);
-          opacity: 1;
-        }
-      }
-    </style>
-  </div> -->
-
-  <div id="display_camera" style="display: block;">
+  <div id="display_camera" style="display: none;">
     <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative; overflow: hidden;">
 
       <!-- Top SMILE CAM -->
@@ -631,7 +491,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <div style="width:100%; border:2px solid #2a3f66; border-radius:12px; overflow:hidden;">
             <div style="display:flex; align-items:center; padding:40px 20px; background:#162a52; font-weight:bold; text-transform:uppercase; font-size:25px;">
               <span id="result_teamA_name" style="flex:1; text-align:center;"></span>
-              <span style="width:200px; text-align:center; letter-spacing:2px;">SET</span>
+              <span style="width:200px; text-align:center; letter-spacing:2px; color:#ffd84d;">SET</span>
               <span id="result_teamB_name" style="flex:1; text-align:center;"></span>
             </div>
             <div id="result_insertSetScores">
@@ -645,6 +505,53 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <div id="result_teamB_sets" style="font-size:60px; font-weight:bold; color:#ffd84d;">0</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="display_smile" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative; overflow: hidden;">
+
+      <!-- Animated background elements -->
+      <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(233, 194, 24, 0.2) 0%, transparent 70%); border-radius: 50%; top: -200px; left: -200px; animation: pulse 6s ease-in-out infinite;"></div>
+      <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(233, 194, 24, 0.15) 0%, transparent 70%); border-radius: 50%; bottom: -200px; right: -200px; animation: pulse 6s ease-in-out infinite 2s;"></div>
+
+      <!-- Top SMILE OF THE DAY -->
+      <div style="position: absolute; top: 40px; font-size: 48px; font-weight: 900; color: #e9c218; text-shadow: 4px 4px 15px rgba(0,0,0,0.9); letter-spacing: 3px; animation: pulse 2s ease-in-out infinite; text-transform: uppercase; z-index: 2;">
+        😊 SMILE OF THE DAY 😊
+      </div>
+
+      <!-- Left decoration -->
+      <div style="position: absolute; left: 30px; font-size: 40px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite; text-align: center; line-height: 1.4; z-index: 1;">
+        😊<br>S<br>M<br>I<br>L<br>E<br>⭐
+      </div>
+
+      <!-- Right decoration -->
+      <div style="position: absolute; right: 30px; font-size: 40px; font-weight: bold; color: #e9c218; text-shadow: 3px 3px 8px rgba(0,0,0,0.8); letter-spacing: 2px; animation: pulse 2s ease-in-out infinite; text-align: center; line-height: 1.4; z-index: 1;">
+        ⭐<br>S<br>M<br>I<br>L<br>E<br>😊
+      </div>
+
+      <!-- Main Image Container -->
+      <div style="position: relative; z-index: 2; animation: slideInUp 0.8s ease-out;">
+        <div style="position: relative; width: 1000px; height: 600px; overflow: hidden; border-radius: 24px; border: 4px solid #e9c218; box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);">
+          <!-- Glow effect -->
+          <div style="position: absolute; inset: -8px; background: linear-gradient(135deg, #e9c218 0%, #ffd84d 100%); border-radius: 24px; animation: borderPulse 3s ease-in-out infinite; z-index: -1;"></div>
+
+          <img id="smile_picture" src="picture/smile.png" alt="Smile of the Day" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; transition: transform 0.4s ease; filter: drop-shadow(0 20px 50px rgba(233, 194, 24, 0.5));" />
+        </div>
+      </div>
+
+      <!-- Bottom SMILE OF THE DAY -->
+      <div style="position: absolute; bottom: 40px; font-size: 50px; font-weight: 900; color: #e9c218; text-shadow: 4px 4px 15px rgba(0,0,0,0.9); letter-spacing: 3px; animation: pulse 2s ease-in-out infinite; text-transform: uppercase; z-index: 2;">
+        🎉 CONGRATULATIONS! 🎉
+      </div>
+
+      <!-- Floating particles effect -->
+      <div style="position: absolute; width: 100%; height: 100%; z-index: 0; pointer-events: none;">
+        <div style="position: absolute; width: 20px; height: 20px; background: #e9c218; border-radius: 50%; animation: float 4s infinite ease-in-out; opacity: 0.3; top: 20%; left: 10%;"></div>
+        <div style="position: absolute; width: 15px; height: 15px; background: #ffd84d; border-radius: 50%; animation: float 5s infinite ease-in-out 1s; opacity: 0.3; top: 30%; right: 15%;"></div>
+        <div style="position: absolute; width: 18px; height: 18px; background: #e9c218; border-radius: 50%; animation: float 6s infinite ease-in-out 2s; opacity: 0.3; bottom: 20%; left: 20%;"></div>
+      </div>
+
     </div>
   </div>
 
@@ -728,7 +635,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             elemetContent += `
               <div style="display:flex; align-items:center; padding:35px 20px; background:${i % 2 === 1 ? '#0e234a' : '#0b1f42'}; font-weight:bold; font-size:35px;">
                 <span id="result_set1_left" style="flex:1; text-align:center;">${response['teamA_set' + i]}</span>
-                <span style="width:200px; text-align:center;">S${i}</span>
+                <span style="width:200px; text-align:center; color:#ffd84d;">S${i}</span>
                 <span id="result_set1_right" style="flex:1; text-align:center;">${response['teamB_set' + i]}</span>
               </div>
             `;
@@ -740,6 +647,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_poster').hide();
           $('#display_versus').hide();
           $('#display_camera').hide();
+          $('#display_smile').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -753,6 +661,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_poster').show();
           $('#display_versus').hide();
           $('#display_camera').hide();
+          $('#display_smile').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -774,6 +683,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_poster').hide();
           $('#display_versus').show();
           $('#display_camera').hide();
+          $('#display_smile').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -787,12 +697,41 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_poster').hide();
           $('#display_versus').hide();
           $('#display_camera').show();
+          $('#display_smile').hide();
 
           if (!isCameraDisplay) {
             startCamera(response.camera_device ?? null);
             isCameraDisplay = true;
           } else if (response.camera_device && response.camera_device !== currentDeviceId) {
             startCamera(response.camera_device);
+          }
+
+        } else if (response.display4 == 1) { // Display Smile Winner
+
+          $('#display_results').hide();
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_versus').hide();
+          $('#display_camera').hide();
+          $('#display_smile').show();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
+
+        } else if (response.display5 == 1) { // Display Team Winner
+
+          $('#display_results').hide();
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_versus').hide();
+          $('#display_camera').hide();
+          $('#display_smile').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
           }
 
         } else {
@@ -802,6 +741,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_poster').hide();
           $('#display_versus').hide();
           $('#display_camera').hide();
+          $('#display_smile').hide();
 
           if (isCameraDisplay) {
             stopCamera();
