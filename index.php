@@ -136,7 +136,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         <button id="display4"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px;;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
           Display Smile
@@ -144,10 +144,18 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         <button id="display5"
           class="serving-btn"
-          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px; margin-bottom: 13px;"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px;;"
           onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
           onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
           Display Winner
+        </button>
+
+        <button id="display6"
+          class="serving-btn"
+          style="padding: 10px 18px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:6px; margin-right:8px; margin-left: 9px;;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Display Game
         </button>
 
       </div>
@@ -1146,7 +1154,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   }
 
   function deactivateOthersFeature(exceptId) {
-    ['display1', 'display2', 'display3', 'display4', 'display5'].forEach(id => {
+    ['display1', 'display2', 'display3', 'display4', 'display5', 'display6'].forEach(id => {
       if (id !== exceptId) setActive(document.getElementById(id), false);
     });
   }
@@ -1265,6 +1273,31 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
     $.ajax({
       url: 'ajax.php?action=display5',
+      type: 'POST',
+      data: {
+        display: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  });
+
+    $('#display6').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersFeature('display6');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+
+    $.ajax({
+      url: 'ajax.php?action=display6',
       type: 'POST',
       data: {
         display: isActive

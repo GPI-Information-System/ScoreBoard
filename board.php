@@ -19,15 +19,12 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
 <body>
 
-  <div id="display_score" class="scoreboard-container" style="display: block;">
-    <!-- Header -->
+  <div id="display_score" class="scoreboard-container">
     <div class="header">
       GPI VOLLEYBALL LEAGUE
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
-      <!-- Team 1 -->
       <div class="team-section">
         <div class="team-picture">
           <img src="display/alt.png" id="teamAImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -36,17 +33,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         <div class="score-display" id="teamA_score">0</div>
       </div>
 
-      <!-- Center Section -->
       <div class="center-section">
         <div style="margin-bottom: 10px; background: linear-gradient(90deg, #3758de 0%, #36538d 100%); color: #ffff00; text-align: center; padding: 15px 20px; font-size: 25px; font-weight: bold; letter-spacing: 3px; border-radius: 8px; text-shadow: 2px 2px 5px black;">
           <h1>Set <span id="setNumber">1</span></h1>
         </div>
-        <!-- Clock -->
         <div class="clock-section">
           <div class="clock-display" id="timer">00:00</div>
         </div>
 
-        <!-- Serving add active in the class -->
         <div style="display: flex; align-items: center; justify-content: center;">
           <div class="serving-section">
             <div class="serving-arrow" id="teamA_serving">◀</div>
@@ -55,10 +49,8 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           </div>
         </div>
 
-        <!-- Timeouts and Sets Section in One Row -->
         <div style="display: flex; gap: 15px; align-items: stretch; margin-top: 15px;">
 
-          <!-- Left: Set Score -->
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 100px;">
             <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #000;">SET WON</div>
             <div style="display: flex; gap: 10px; justify-content: center;">
@@ -66,7 +58,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             </div>
           </div>
 
-          <!-- Center: Timeouts -->
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 150px;">
             <div style="text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #000;">Time Out Left</div>
             <div style="display: flex; gap: 8px; justify-content: center;">
@@ -96,7 +87,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             </div>
           </div>
 
-          <!-- Right: Sets Won -->
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-width: 100px;">
             <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #000;">SET WON</div>
             <div style="display: flex; gap: 10px; justify-content: center;">
@@ -108,25 +98,21 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
         <div style="display: flex; gap: 10px; margin-top: 30px; justify-content: center;">
 
-          <!-- Item 1 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 1</div>
             <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set1"></div>
           </div>
 
-          <!-- Item 2 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 2</div>
             <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set2"></div>
           </div>
 
-          <!-- Item 3 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 3</div>
             <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set3"></div>
           </div>
 
-          <!-- Item 4 -->
           <div style="display:flex; flex-direction:column; align-items:stretch; flex:1; min-width:150px; ">
             <div style="text-align:center; font-size: 20px; margin-bottom:6px; font-weight:bold;">SET 4</div>
             <div style="background: #000; border: 2px solid #666; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #e9c218; height: 130px; font-size: 35px; font-family: 'DS Digital', 'Digital-7', 'Orbitron', monospace;" id="set4"></div>
@@ -136,7 +122,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       </div>
 
-      <!-- Team 2 -->
       <div class="team-section">
         <div class="team-picture">
           <img src="display/alt.png" id="teamBImage" alt="Insert Picture" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -174,7 +159,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       position: relative;
       overflow: hidden;">
 
-      <!-- Animated background elements -->
       <div style="
         position: absolute;
         width: 500px;
@@ -197,12 +181,9 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       </div>
 
       <div class="clock-section" style="position: absolute; margin-top: -600px; ">
-        <!-- <div style="background: #000;"> -->
         <div class="clock-display" id="versus_timer">00:00</div>
-        <!-- </div> -->
       </div>
 
-      <!-- Main content -->
       <div style="
         display: flex;
         align-items: center;
@@ -213,7 +194,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         position: relative;
         z-index: 1;">
 
-        <!-- Team A -->
         <div style="
           flex: 1;
           display: flex;
@@ -597,6 +577,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     </div>
   </div>
 
+  <div id="display_game" style="display: none;">
+    <h1>Hello, Game!</h1>
+  </div>
+
   <script src="script/jquery.min.js"></script>
 
 </body>
@@ -685,6 +669,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').hide();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -700,6 +685,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').hide();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -723,6 +709,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').hide();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -738,6 +725,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').show();
           $('#display_smile').hide();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (!isCameraDisplay) {
             startCamera(response.camera_device ?? null);
@@ -755,6 +743,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').show();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -773,6 +762,23 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').hide();
           $('#display_winner').show();
+          $('#display_game').hide();
+
+          if (isCameraDisplay) {
+            stopCamera();
+            isCameraDisplay = false;
+          }
+
+        } else if (response.display6 == 1) { // Display Game
+
+          $('#display_results').hide();
+          $('#display_score').hide();
+          $('#display_poster').hide();
+          $('#display_versus').hide();
+          $('#display_camera').hide();
+          $('#display_smile').hide();
+          $('#display_winner').hide();
+          $('#display_game').show();
 
           if (isCameraDisplay) {
             stopCamera();
@@ -788,6 +794,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           $('#display_camera').hide();
           $('#display_smile').hide();
           $('#display_winner').hide();
+          $('#display_game').hide();
 
           if (isCameraDisplay) {
             stopCamera();
