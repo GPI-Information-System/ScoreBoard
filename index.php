@@ -1674,7 +1674,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   });
 
   $('#ans').on('click', function() {
-
+    $.ajax({
+      url: 'ajax.php?action=answer',
+      type: 'POST',
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
   // $('#sound1').on('click', function() {

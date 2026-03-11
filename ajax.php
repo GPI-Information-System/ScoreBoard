@@ -44,6 +44,14 @@ if ($action === 'fetchingRecords') {
       'display5'       => $row['display5'],
       'display6'       => $row['display6'],
 
+      'q1'             => $row['q1'],
+      'q2'             => $row['q2'],
+      'q3'             => $row['q3'],
+      'q4'             => $row['q4'],
+      'q5'             => $row['q5'],
+      'q6'             => $row['q6'],
+      'ans'            => $row['ans'],
+
       'camera_device'  => $row['camera_device'],
 
       'game_question'  => isset($row['game_question']) ? $row['game_question'] : null,
@@ -287,6 +295,10 @@ if ($action === 'question6') {
   mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2=0, q3=0, q4=0, q5=0, q6='$question', ans=0 WHERE id=1");
 }
 
+if ($action === 'answer') {
+  mysqli_query($conn, "UPDATE ingame_record SET ans=1 WHERE id=1");
+}
+
 if ($action === 'resetDetails') {
   $display = $_POST['display'];
 
@@ -327,4 +339,19 @@ if ($action === 'saveRecord') {
   }
 
   if ($query != '') mysqli_query($conn, "UPDATE ingame_record SET $query endGame=1 WHERE id=1");
+}
+
+
+if ($action === 'fetchingQandA') {
+  $question = $_POST['question'];
+  $answer   = $_POST['answer'];
+
+  $result = mysqli_query($conn, "SELECT * FROM questions WHERE question_no='$question' limit 1");
+  if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+    echo $answer == 1 ? $row['answer'] : $row['question'];
+  } else {
+    echo "Get ready for the Q&amp;A round!";
+  }
 }

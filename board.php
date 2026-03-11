@@ -660,8 +660,6 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
-        // $('#game_question').text(response.game_question);
-
         if (response.display5 != 1) {
           stopWinnerFireworks();
         }
@@ -853,6 +851,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             startGameCamera(response.camera_device);
           }
 
+          if (response.q1 == 1) getQandA('q1', response.ans);
+          else if (response.q2 == 1) getQandA('q2', response.ans);
+          else if (response.q3 == 1) getQandA('q3', response.ans);
+          else if (response.q4 == 1) getQandA('q4', response.ans);
+          else if (response.q5 == 1) getQandA('q5', response.ans);
+          else if (response.q6 == 1) getQandA('q6', response.ans);
+          else getQandA('q0', response.ans);
+
         } else {
 
           $('#display_results').hide();
@@ -878,6 +884,23 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       },
       error: function(xhr, status, error) {
         console.error("Response Text: " + xhr.responseText);
+      }
+    });
+  }
+
+  function getQandA(question, answer) {
+    $.ajax({
+      url: 'ajax.php?action=fetchingQandA',
+      type: 'POST',
+      data: {
+        question: question,
+        answer: answer
+      },
+      success: function(response) {
+        $('#game_question').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.error("Q&A Error Response Text: " + xhr.responseText);
       }
     });
   }
