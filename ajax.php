@@ -257,6 +257,36 @@ if ($action === 'camera_device') {
   mysqli_query($conn, "UPDATE ingame_record SET camera_device='$device' WHERE id=1");
 }
 
+if ($action === 'question1') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1='$question', q2=0, q3=0, q4=0, q5=0, q6=0, ans=0 WHERE id=1");
+}
+
+if ($action === 'question2') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2='$question', q3=0, q4=0, q5=0, q6=0, ans=0 WHERE id=1");
+}
+
+if ($action === 'question3') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2=0, q3='$question', q4=0, q5=0, q6=0, ans=0 WHERE id=1");
+}
+
+if ($action === 'question4') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2=0, q3=0, q4='$question', q5=0, q6=0, ans=0 WHERE id=1");
+}
+
+if ($action === 'question5') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2=0, q3=0, q4=0, q5='$question', q6=0, ans=0 WHERE id=1");
+}
+
+if ($action === 'question6') {
+  $question = $_POST['question'];
+  mysqli_query($conn, "UPDATE ingame_record SET q1=0, q2=0, q3=0, q4=0, q5=0, q6='$question', ans=0 WHERE id=1");
+}
+
 if ($action === 'resetDetails') {
   $display = $_POST['display'];
 

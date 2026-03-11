@@ -660,7 +660,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
-        $('#game_question').text(response.game_question);
+        // $('#game_question').text(response.game_question);
 
         if (response.display5 != 1) {
           stopWinnerFireworks();

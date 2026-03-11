@@ -295,6 +295,66 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 
       </div>
 
+      <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px;">
+
+        <button id="q1"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q1
+        </button>
+
+        <button id="q2"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q2
+        </button>
+
+        <button id="q3"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q3
+        </button>
+
+        <button id="q4"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q4
+        </button>
+
+        <button id="q5"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q5
+        </button>
+
+        <button id="q6"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          Q6
+        </button>
+
+        <button id="ans"
+          class="serving-btn"
+          style="padding: 0px; font-size: 17px; cursor: pointer; background:#e5e7eb; border:1px solid #000000; border-radius:10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"
+          onmouseover="if(!this.dataset.active) this.style.background='#d4d3d3';"
+          onmouseout="if(!this.dataset.active) this.style.background='#e5e7eb';">
+          ANS
+        </button>
+
+      </div>
+
       <div style="background-color: #fff; border: 3px solid #666; width: 75%; height: 250px; padding: 15px;display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
 
         <audio src="audios/Hawks.mp3" id="Hawks_sound" preload="auto"></audio>
@@ -1284,7 +1344,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     });
   });
 
-    $('#display6').on('click', function() {
+  $('#display6').on('click', function() {
     const wasActive = this.dataset.active === '1';
     var isActive = 0;
     if (wasActive) {
@@ -1452,39 +1512,204 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     audio.play();
   });
 
-  $('#sound1').on('click', function() {
-    const audio = document.getElementById('sound1_sound');
-    audio.currentTime = 0;
-    audio.play();
+
+
+
+
+
+
+
+
+
+
+
+  function deactivateOthersQ(exceptId) {
+    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'].forEach(id => {
+      if (id !== exceptId) setActiveFeature(document.getElementById(id), false);
+    });
+  }
+
+  $('#q1').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q1');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question1',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
-  $('#sound2').on('click', function() {
-    const audio = document.getElementById('sound2_sound');
-    audio.currentTime = 0;
-    audio.play();
+  $('#q2').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q2');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question2',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
-  $('#sound3').on('click', function() {
-    const audio = document.getElementById('sound3_sound');
-    audio.currentTime = 0;
-    audio.play();
+  $('#q3').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q3');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question3',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
-  $('#sound4').on('click', function() {
-    const audio = document.getElementById('sound4_sound');
-    audio.currentTime = 0;
-    audio.play();
+  $('#q4').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q4');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question4',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
-  $('#sound5').on('click', function() {
-    const audio = document.getElementById('sound5_sound');
-    audio.currentTime = 0;
-    audio.play();
+  $('#q5').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q5');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question5',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
 
-  $('#sound6').on('click', function() {
-    const audio = document.getElementById('sound6_sound');
-    audio.currentTime = 0;
-    audio.play();
+  $('#q6').on('click', function() {
+    const wasActive = this.dataset.active === '1';
+    var isActive = 0;
+    if (wasActive) {
+      setActiveFeature(this, false);
+      isActive = 0;
+    } else {
+      deactivateOthersQ('q6');
+      setActiveFeature(this, true);
+      isActive = 1;
+    }
+    $.ajax({
+      url: 'ajax.php?action=question6',
+      type: 'POST',
+      data: {
+        question: isActive
+      },
+      success: function(response) {},
+      error: function(xhr, status, error) {
+        console.error("Response Text: " + xhr.responseText);
+      }
+    });
   });
+
+  $('#ans').on('click', function() {
+
+  });
+
+  // $('#sound1').on('click', function() {
+  //   const audio = document.getElementById('sound1_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
+
+  // $('#sound2').on('click', function() {
+  //   const audio = document.getElementById('sound2_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
+
+  // $('#sound3').on('click', function() {
+  //   const audio = document.getElementById('sound3_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
+
+  // $('#sound4').on('click', function() {
+  //   const audio = document.getElementById('sound4_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
+
+  // $('#sound5').on('click', function() {
+  //   const audio = document.getElementById('sound5_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
+
+  // $('#sound6').on('click', function() {
+  //   const audio = document.getElementById('sound6_sound');
+  //   audio.currentTime = 0;
+  //   audio.play();
+  // });
 </script>
