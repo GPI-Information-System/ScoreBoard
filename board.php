@@ -578,7 +578,36 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   </div>
 
   <div id="display_game" style="display: none;">
-    <h1>Hello, Game!</h1>
+
+    <div class="game-screen">
+      <div id="game_frame" class="game-frame-row">
+        <div class="game-camera-shell">
+          <canvas id="game_canvas"></canvas>
+          <div id="game_camera_fallback" class="game-camera-fallback" style="display: none;">Camera is unavailable</div>
+        </div>
+      </div>
+
+      <div class="game-question-row">
+        <div id="game_question">Get ready for the Q&amp;A round!</div>
+      </div>
+    </div>
+
+
+    <!-- <div class="game-screen" style="display:grid; grid-template-rows: 20vh 1fr; gap:14px;">
+
+      <div class="game-question-row" style="display:flex; align-items:center; justify-content:center; text-align:center; border-radius:14px; border:2px solid rgba(255, 216, 77, 0.5); background:linear-gradient(90deg, rgba(7, 18, 40, 0.85) 0%, rgba(21, 44, 92, 0.82) 100%); padding:10px 20px;">
+        <div id="game_question">Get ready for the Q&amp;A round!</div>
+      </div>
+
+      <div id="game_frame" class="game-frame-row" style="display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        <div class="game-camera-shell">
+          <canvas id="game_canvas"></canvas>
+          <div id="game_camera_fallback" class="game-camera-fallback" style="display: none;">Camera is unavailable</div>
+        </div>
+      </div>
+    </div> -->
+
+
   </div>
 
   <script src="script/jquery.min.js"></script>
@@ -631,6 +660,8 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         response.teamA_serving == 1 ? $('#teamA_serving').addClass('active') : $('#teamA_serving').removeClass('active');
         response.teamB_serving == 1 ? $('#teamB_serving').addClass('active') : $('#teamB_serving').removeClass('active');
 
+        $('#game_question').text(response.game_question);
+
         if (response.display5 != 1) {
           stopWinnerFireworks();
         }
@@ -676,6 +707,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
+          }
+
         } else if (response.display1 == 1) { // Display Poster
 
           $('#display_results').hide();
@@ -690,6 +726,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           if (isCameraDisplay) {
             stopCamera();
             isCameraDisplay = false;
+          }
+
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
           }
 
         } else if (response.display2 == 1) { // Display Versus
@@ -716,6 +757,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
+          }
+
         } else if (response.display3 == 1) { // Display Camera
 
           $('#display_results').hide();
@@ -734,6 +780,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             startCamera(response.camera_device);
           }
 
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
+          }
+
         } else if (response.display4 == 1) { // Display Smile Winner
 
           $('#display_results').hide();
@@ -748,6 +799,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           if (isCameraDisplay) {
             stopCamera();
             isCameraDisplay = false;
+          }
+
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
           }
 
         } else if (response.display5 == 1) { // Display Team Winner
@@ -769,6 +825,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
+          }
+
         } else if (response.display6 == 1) { // Display Game
 
           $('#display_results').hide();
@@ -783,6 +844,13 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           if (isCameraDisplay) {
             stopCamera();
             isCameraDisplay = false;
+          }
+
+          if (!isGameCameraDisplay) {
+            startGameCamera(response.camera_device ?? null);
+            isGameCameraDisplay = true;
+          } else if (response.camera_device && response.camera_device !== currentGameDeviceId) {
+            startGameCamera(response.camera_device);
           }
 
         } else {
@@ -801,6 +869,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
             isCameraDisplay = false;
           }
 
+          if (isGameCameraDisplay) {
+            stopGameCamera();
+            isGameCameraDisplay = false;
+          }
+
         }
       },
       error: function(xhr, status, error) {
@@ -814,6 +887,9 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   let display_cam;
   let video;
   let currentDeviceId = null;
+  let game_cam;
+  let currentGameDeviceId = null;
+  var isGameCameraDisplay = false;
 
   function startCamera(deviceId) {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -875,8 +951,97 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       display_cam = null;
     }
     context_canvas.clearRect(0, 0, canvas.width, canvas.height);
-    video.srcObject = null;
+    if (video) {
+      video.srcObject = null;
+    }
     currentDeviceId = null;
+  }
+
+  function startGameCamera(deviceId) {
+    var gameCanvas = document.getElementById('game_canvas');
+    var fallbackEl = document.getElementById('game_camera_fallback');
+
+    if (!gameCanvas || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      return;
+    }
+
+    if (game_cam) {
+      stopGameCamera();
+    }
+
+    if (fallbackEl) {
+      fallbackEl.style.display = 'none';
+    }
+
+    const constraints = {
+      video: deviceId ? {
+        deviceId: {
+          exact: deviceId
+        }
+      } : true
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+      game_cam = stream;
+      currentGameDeviceId = deviceId || stream.getVideoTracks()[0]?.getSettings?.().deviceId || null;
+
+      var gameVideo = document.createElement('video');
+      gameVideo.muted = true;
+      gameVideo.playsInline = true;
+      gameVideo.setAttribute('playsinline', '');
+      gameVideo.autoplay = true;
+      gameVideo.srcObject = game_cam;
+      gameVideo.play().catch(() => {});
+
+      gameVideo.onloadedmetadata = function() {
+        gameCanvas.width = gameVideo.videoWidth || 1280;
+        gameCanvas.height = gameVideo.videoHeight || 720;
+        drawGame(gameVideo, gameCanvas);
+      };
+    }).catch(error => {
+      console.error('Error accessing game camera:', error);
+
+      if (deviceId) {
+        startGameCamera(null);
+        return;
+      }
+
+      if (fallbackEl) {
+        fallbackEl.style.display = 'flex';
+      }
+    });
+  }
+
+  function drawGame(gameVideo, gameCanvas) {
+    if (!game_cam) {
+      return;
+    }
+    var ctx = gameCanvas.getContext('2d');
+    ctx.drawImage(gameVideo, 0, 0, gameCanvas.width, gameCanvas.height);
+    requestAnimationFrame(function() {
+      drawGame(gameVideo, gameCanvas);
+    });
+  }
+
+  function stopGameCamera() {
+    var gameCanvas = document.getElementById('game_canvas');
+    var fallbackEl = document.getElementById('game_camera_fallback');
+
+    if (game_cam) {
+      game_cam.getTracks().forEach(track => track.stop());
+      game_cam = null;
+    }
+
+    if (gameCanvas) {
+      var ctx = gameCanvas.getContext('2d');
+      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    }
+
+    if (fallbackEl) {
+      fallbackEl.style.display = 'none';
+    }
+
+    currentGameDeviceId = null;
   }
 
   function initWinnerConfetti() {

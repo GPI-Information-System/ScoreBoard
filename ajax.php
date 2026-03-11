@@ -46,6 +46,8 @@ if ($action === 'fetchingRecords') {
 
       'camera_device'  => $row['camera_device'],
 
+      'game_question'  => isset($row['game_question']) ? $row['game_question'] : null,
+
       'endGame'        => $row['endGame'],
 
       'timer'          => $row['timer'],
