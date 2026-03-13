@@ -146,201 +146,377 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
   </div>
 
   <div id="display_versus" style="display: none;">
-    <div style="
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #1a1f3a 0%, #2a3050 50%, #1d2b3a 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-      position: relative;
-      overflow: hidden;">
-
-      <div style="
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(233, 194, 24, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
-        top: -150px;
-        left: -150px;
-        animation: pulse 6s ease-in-out infinite;">
+    <div class="versus-stage">
+      <div class="versus-noise-layer"></div>
+      <div class="versus-light-sweep"></div>
+      <div class="versus-particles" aria-hidden="true">
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
+        <span class="versus-particle"></span>
       </div>
-      <div style="
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(55, 88, 222, 0.1) 0%, transparent 70%);
-        border-radius: 50%;
-        bottom: -150px;
-        right: -150px;
-        animation: pulse 6s ease-in-out infinite 2s;">
+      <div class="versus-aura versus-aura-a"></div>
+      <div class="versus-aura versus-aura-b"></div>
+
+      <div class="clock-section versus-clock-wrap">
+        <div class="clock-display" id="versus_timer" style="margin-top: 100px;">00:00</div>
       </div>
 
-      <div class="clock-section" style="position: absolute; margin-top: -600px; ">
-        <div class="clock-display" id="versus_timer">00:00</div>
-      </div>
+      <!-- <div class="versus-banner">CHAMPIONSHIP MATCH</div> -->
 
-      <div style="
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 1400px;
-        gap: 60px;
-        position: relative;
-        z-index: 1;">
-
-        <div style="
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 24px;
-          animation: slideInLeft 0.8s ease-out;">
-
-          <div style="
-            position: relative;
-            width: 320px;
-            height: 320px;">
-            <div id="versus_teamA_glow" style="
-              position: absolute;
-              inset: -8px;
-              background: linear-gradient(135deg, #e9c218 0%, #ffd84d 100%);
-              border-radius: 24px;
-              animation: borderPulse 3s ease-in-out infinite;
-              z-index: -1;">
-            </div>
-            <img id="versus_teamA_img" src="display/alt.png" alt="Team A" style="
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
-              background: rgba(10, 14, 39, 0.8);
-              border-radius: 24px;
-              padding: 20px;
-              box-sizing: border-box;
-              transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-              cursor: pointer;
-              filter: drop-shadow(0 15px 40px rgba(233, 194, 24, 0.4));">
+      <div class="versus-main-wrap">
+        <div class="versus-team versus-team-a">
+          <div class="versus-logo-frame">
+            <div id="versus_teamA_glow" class="versus-glow versus-glow-a"></div>
+            <img id="versus_teamA_img" src="display/alt.png" alt="Team A" class="versus-logo versus-logo-a">
           </div>
-
-          <div id="versus_teamA_name" style="
-            font-size: 56px;
-            font-weight: 900;
-            color: #e9c218;
-            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
-            text-align: center;
-            letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            text-transform: uppercase;">
-          </div>
+          <div id="versus_teamA_name" class="versus-team-name versus-team-name-a"></div>
         </div>
 
-        <!-- Header -->
-        <!-- <div style=" 
-          position: absolute;
-          top: 40px;
-          font-size: 32px;
-          font-weight: bold;
-          color: #e9c218;
-          text-shadow: 3px 3px 10px rgba(0,0,0,0.9);
-          letter-spacing: 3px;
-          z-index: 2;">
-          CHAMPIONSHIP MATCH
-        </div> -->
-
-        <!-- Center divider -->
-        <div style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 30px;
-          position: relative;
-          z-index: 2;">
-
-          <div style="
-            font-size: 120px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #e9c218 0%, #ffd84d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(233, 194, 24, 0.5);
-            letter-spacing: 4px;
-            animation: pulse 2s ease-in-out infinite;
-            line-height: 1;">
-            VS
-          </div>
+        <div class="versus-center">
+          <div class="versus-center-line"></div>
+          <div class="versus-title">VS</div>
+          <div class="versus-center-line"></div>
         </div>
 
-        <!-- Team B -->
-        <div style="
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 24px;
-          animation: slideInRight 0.8s ease-out;">
-
-          <div style="
-            position: relative;
-            width: 320px;
-            height: 320px;">
-            <div id="versus_teamB_glow" style="
-              position: absolute;
-              inset: -8px;
-              background: linear-gradient(135deg, #3758de 0%, #5770ff 100%);
-              border-radius: 24px;
-              animation: borderPulse 3s ease-in-out infinite 1.5s;
-              z-index: -1;">
-            </div>
-            <img id="versus_teamB_img" src="display/alt.png" alt="Team B" style="
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
-              background: rgba(10, 14, 39, 0.8);
-              border-radius: 24px;
-              padding: 20px;
-              box-sizing: border-box;
-              transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-              cursor: pointer;
-              filter: drop-shadow(0 15px 40px rgba(55, 88, 222, 0.4));">
+        <div class="versus-team versus-team-b">
+          <div class="versus-logo-frame">
+            <div id="versus_teamB_glow" class="versus-glow versus-glow-b"></div>
+            <img id="versus_teamB_img" src="display/alt.png" alt="Team B" class="versus-logo versus-logo-b">
           </div>
-
-          <div id="versus_teamB_name" style="
-            font-size: 56px;
-            font-weight: 900;
-            color: #5770ff;
-            text-shadow: 4px 4px 12px rgba(0,0,0,0.9);
-            text-align: center;
-            letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            text-transform: uppercase;">
-          </div>
+          <div id="versus_teamB_name" class="versus-team-name versus-team-name-b"></div>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div style="
-        position: absolute;
-        bottom: 40px;
-        font-size: 24px;
-        color: #fff;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-        letter-spacing: 2px;
-        animation: fadeInUp 1s ease-out 0.6s both;">
-        GET READY FOR THE MATCH
-      </div>
+      <div class="versus-footer" style="margin-bottom: 80px;">GET READY FOR THE MATCH</div>
     </div>
 
     <style>
-      @keyframes slideInLeft {
+      .versus-stage {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(233, 194, 24, 0.12) 0%, transparent 34%),
+          radial-gradient(circle at 85% 75%, rgba(87, 112, 255, 0.15) 0%, transparent 36%),
+          linear-gradient(145deg, #081127 0%, #101b3c 45%, #0b1a2f 100%);
+      }
+
+      .versus-noise-layer {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 40px 40px;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .versus-light-sweep {
+        position: absolute;
+        inset: -15%;
+        z-index: 1;
+        pointer-events: none;
+        background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.09) 50%, transparent 65%);
+        animation: versusLightSweep 9s linear infinite;
+      }
+
+      .versus-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .versus-particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        opacity: 0.35;
+        filter: blur(0.4px);
+        animation: versusParticleFloat 10s linear infinite;
+      }
+
+      .versus-particle:nth-child(1) {
+        left: 8%;
+        top: 78%;
+        width: 8px;
+        height: 8px;
+        background: #ffd84d;
+        animation-duration: 11s;
+      }
+
+      .versus-particle:nth-child(2) {
+        left: 22%;
+        top: 92%;
+        width: 12px;
+        height: 12px;
+        background: #8ba2ff;
+        animation-duration: 14s;
+        animation-delay: -2s;
+      }
+
+      .versus-particle:nth-child(3) {
+        left: 36%;
+        top: 86%;
+        width: 7px;
+        height: 7px;
+        background: #ffe99f;
+        animation-duration: 10s;
+        animation-delay: -4s;
+      }
+
+      .versus-particle:nth-child(4) {
+        left: 48%;
+        top: 95%;
+        width: 11px;
+        height: 11px;
+        background: #7d95ff;
+        animation-duration: 13s;
+      }
+
+      .versus-particle:nth-child(5) {
+        left: 62%;
+        top: 88%;
+        width: 9px;
+        height: 9px;
+        background: #ffd84d;
+        animation-duration: 12s;
+        animation-delay: -5s;
+      }
+
+      .versus-particle:nth-child(6) {
+        left: 75%;
+        top: 94%;
+        width: 13px;
+        height: 13px;
+        background: #9fb3ff;
+        animation-duration: 15s;
+        animation-delay: -2.5s;
+      }
+
+      .versus-particle:nth-child(7) {
+        left: 86%;
+        top: 84%;
+        width: 8px;
+        height: 8px;
+        background: #ffe9a3;
+        animation-duration: 10.5s;
+        animation-delay: -3.5s;
+      }
+
+      .versus-particle:nth-child(8) {
+        left: 94%;
+        top: 90%;
+        width: 10px;
+        height: 10px;
+        background: #7894ff;
+        animation-duration: 12.5s;
+        animation-delay: -1s;
+      }
+
+      .versus-aura {
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        filter: blur(10px);
+        animation: versusAuraFloat 6s ease-in-out infinite;
+      }
+
+      .versus-aura-a {
+        top: -180px;
+        left: -180px;
+        background: radial-gradient(circle, rgba(233, 194, 24, 0.22) 0%, transparent 70%);
+      }
+
+      .versus-aura-b {
+        right: -180px;
+        bottom: -180px;
+        background: radial-gradient(circle, rgba(87, 112, 255, 0.2) 0%, transparent 70%);
+        animation-delay: 2s;
+      }
+
+      .versus-clock-wrap {
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+      }
+
+      .versus-banner {
+        position: absolute;
+        top: 92px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        color: #fce798;
+        font-size: clamp(18px, 2.4vw, 30px);
+        font-weight: 800;
+        letter-spacing: 4px;
+        text-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        animation: versusFadeInUpCentered 0.8s ease both;
+      }
+
+      .versus-main-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1500px, 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(22px, 4vw, 70px);
+        margin-top: 38px;
+      }
+
+      .versus-team {
+        flex: 1;
+        min-width: 0;
+        --versus-logo-size: min(34vw, 340px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .versus-team-a {
+        animation: versusSlideInLeft 0.8s ease-out;
+      }
+
+      .versus-team-b {
+        animation: versusSlideInRight 0.8s ease-out;
+      }
+
+      .versus-logo-frame {
+        position: relative;
+        width: var(--versus-logo-size);
+        height: var(--versus-logo-size);
+      }
+
+      .versus-glow {
+        position: absolute;
+        inset: -10px;
+        border-radius: 30px;
+        z-index: -1;
+      }
+
+      .versus-glow-a {
+        background: linear-gradient(140deg, #f3c517 0%, #ffea86 100%);
+        animation: versusGlowPulseA 3s ease-in-out infinite;
+      }
+
+      .versus-glow-b {
+        background: linear-gradient(140deg, #2f56f5 0%, #7f97ff 100%);
+        animation: versusGlowPulseB 3s ease-in-out infinite 1.4s;
+      }
+
+      .versus-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 28px;
+        background: rgba(5, 11, 29, 0.85);
+        box-sizing: border-box;
+        padding: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+      }
+
+      .versus-logo-a {
+        box-shadow: 0 22px 48px rgba(243, 197, 23, 0.26);
+      }
+
+      .versus-logo-b {
+        box-shadow: 0 22px 48px rgba(87, 112, 255, 0.26);
+      }
+
+      .versus-logo:hover {
+        transform: translateY(-5px) scale(1.01);
+      }
+
+      .versus-team-name {
+        width: var(--versus-logo-size);
+        max-width: 100%;
+        font-size: clamp(30px, 4.2vw, 62px);
+        font-weight: 900;
+        text-align: center;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        line-height: 1.06;
+        text-shadow: 0 10px 24px rgba(0, 0, 0, 0.66);
+        animation: versusFadeInUp 0.8s ease 0.2s both;
+      }
+
+      .versus-team-name-a {
+        color: #ffd84d;
+      }
+
+      .versus-team-name-b {
+        color: #7d95ff;
+      }
+
+      .versus-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .versus-center-line {
+        width: 2px;
+        height: clamp(80px, 14vh, 140px);
+        background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.65), transparent);
+      }
+
+      .versus-title {
+        font-size: clamp(64px, 11vw, 140px);
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: 5px;
+        background: linear-gradient(140deg, #ffe381 5%, #f8bf00 40%, #fff2c5 95%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 36px rgba(255, 206, 48, 0.3);
+        animation: versusSpark 2.2s ease-in-out infinite;
+      }
+
+      .versus-footer {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        padding: 11px 26px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        background: rgba(8, 16, 36, 0.44);
+        backdrop-filter: blur(7px);
+        color: #ffffff;
+        font-size: clamp(14px, 1.5vw, 22px);
+        letter-spacing: 2px;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        animation: versusFadeInUpCentered 1s ease 0.5s both;
+      }
+
+      @keyframes versusSlideInLeft {
         from {
           opacity: 0;
-          transform: translateX(-150px);
+          transform: translateX(-120px);
         }
 
         to {
@@ -349,10 +525,10 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         }
       }
 
-      @keyframes slideInRight {
+      @keyframes versusSlideInRight {
         from {
           opacity: 0;
-          transform: translateX(150px);
+          transform: translateX(120px);
         }
 
         to {
@@ -361,15 +537,113 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         }
       }
 
-      @keyframes fadeInUp {
+      @keyframes versusFadeInUp {
         from {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(14px);
         }
 
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @keyframes versusFadeInUpCentered {
+        from {
+          opacity: 0;
+          transform: translate(-50%, 14px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+      }
+
+      @keyframes versusAuraFloat {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+
+        50% {
+          transform: scale(1.06);
+          opacity: 0.65;
+        }
+      }
+
+      @keyframes versusLightSweep {
+        0% {
+          transform: translateX(-30%) translateY(0) rotate(0deg);
+        }
+
+        100% {
+          transform: translateX(30%) translateY(0) rotate(0deg);
+        }
+      }
+
+      @keyframes versusParticleFloat {
+        0% {
+          transform: translateY(0) translateX(0) scale(0.85);
+          opacity: 0;
+        }
+
+        10% {
+          opacity: 0.34;
+        }
+
+        75% {
+          opacity: 0.26;
+        }
+
+        100% {
+          transform: translateY(-115vh) translateX(24px) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      @keyframes versusGlowPulseA {
+
+        0%,
+        100% {
+          box-shadow: 0 0 22px rgba(243, 197, 23, 0.48);
+          transform: scale(1);
+        }
+
+        50% {
+          box-shadow: 0 0 54px rgba(243, 197, 23, 0.8);
+          transform: scale(1.02);
+        }
+      }
+
+      @keyframes versusGlowPulseB {
+
+        0%,
+        100% {
+          box-shadow: 0 0 22px rgba(87, 112, 255, 0.5);
+          transform: scale(1);
+        }
+
+        50% {
+          box-shadow: 0 0 54px rgba(87, 112, 255, 0.8);
+          transform: scale(1.02);
+        }
+      }
+
+      @keyframes versusSpark {
+
+        0%,
+        100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 0 rgba(255, 206, 48, 0));
+        }
+
+        50% {
+          transform: scale(1.05);
+          filter: drop-shadow(0 0 14px rgba(255, 206, 48, 0.6));
         }
       }
 
@@ -401,29 +675,88 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
         }
       }
 
-      @keyframes dotPulse {
-
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 0.6;
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
         }
 
-        50% {
-          transform: scale(1.3);
+        to {
           opacity: 1;
+          transform: translateY(0);
         }
       }
 
-      @keyframes heightPulse {
+      @keyframes float {
 
         0%,
         100% {
-          height: 80px;
+          transform: translateY(0px) rotate(0deg);
         }
 
         50% {
-          height: 120px;
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .versus-main-wrap {
+          gap: 22px;
+          margin-top: 50px;
+        }
+
+        .versus-team {
+          --versus-logo-size: min(34vw, 300px);
+        }
+
+        .versus-banner {
+          top: 84px;
+          letter-spacing: 3px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .versus-main-wrap {
+          flex-direction: column;
+          gap: 14px;
+          margin-top: 72px;
+        }
+
+        .versus-center {
+          flex-direction: row;
+          gap: 14px;
+        }
+
+        .versus-center-line {
+          width: clamp(60px, 18vw, 120px);
+          height: 2px;
+          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.65), transparent);
+        }
+
+        .versus-team {
+          --versus-logo-size: min(58vw, 250px);
+        }
+
+        .versus-banner {
+          top: 70px;
+          letter-spacing: 2px;
+        }
+
+        .versus-footer {
+          width: calc(100% - 30px);
+          text-align: center;
+          padding: 10px 16px;
+          bottom: 16px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+
+        .versus-stage *,
+        .versus-stage *::before,
+        .versus-stage *::after {
+          animation: none !important;
+          transition: none !important;
         }
       }
     </style>
