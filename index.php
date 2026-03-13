@@ -16,6 +16,14 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
 </head>
 
 <body>
+
+  <audio src="audios/Hawks.mp3" id="HAWKS" preload="auto"></audio>
+  <audio src="audios/Sharks.mp3" id="SHARKS" preload="auto"></audio>
+  <audio src="audios/Tigers.mp3" id="TIGERS" preload="auto"></audio>
+  <audio src="audios/Vipers.mp3" id="VIPERS" preload="auto"></audio>
+  <audio src="audios/Wildcats.mp3" id="WILDCATS" preload="auto"></audio>
+  <audio src="audios/Wolves.mp3" id="WOLVES" preload="auto"></audio>
+
   <div class="scoreboard-container">
     <div class="team-section">
       <div class="team-panel">
@@ -629,6 +637,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     const next = current + 1;
     score.text(next);
     updateScoreA($('#teamA_score').text());
+
+    const name = $('#teamA_name').val().toUpperCase();
+    const audio = document.getElementById(name);
+    audio.currentTime = 0;
+    audio.play();
   });
 
   function updateScoreB(score) {
@@ -659,6 +672,11 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     const next = current + 1;
     score.text(next);
     updateScoreB($('#teamB_score').text());
+
+    const name = $('#teamB_name').val().toUpperCase();
+    const audio = document.getElementById(name);
+    audio.currentTime = 0;
+    audio.play();
   });
 
   function updateSetA(set) {
