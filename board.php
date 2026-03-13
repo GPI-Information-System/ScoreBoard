@@ -955,6 +955,8 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
     initWinnerFireworks();
     setInterval(counter, 1000);
     initDominantColors();
+    fitGameQuestionText();
+    $(window).on('resize', fitGameQuestionText);
   });
 
   var isCameraDisplay = false;
@@ -1231,11 +1233,32 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
       },
       success: function(response) {
         $('#game_question').html(response);
+        fitGameQuestionText();
       },
       error: function(xhr, status, error) {
         console.error("Q&A Error Response Text: " + xhr.responseText);
       }
     });
+  }
+
+  function fitGameQuestionText() {
+    var questionEl = document.getElementById('game_question');
+    var rowEl = document.querySelector('.game-question-row');
+
+    if (!questionEl || !rowEl) {
+      return;
+    }
+
+    var maxSize = Math.max(24, Math.min(52, window.innerWidth * 0.03));
+    var minSize = 15;
+    var availableHeight = Math.max(24, rowEl.clientHeight - 10);
+
+    questionEl.style.fontSize = maxSize + 'px';
+
+    while ((questionEl.scrollHeight > availableHeight || questionEl.scrollWidth > questionEl.clientWidth) && maxSize > minSize) {
+      maxSize -= 1;
+      questionEl.style.fontSize = maxSize + 'px';
+    }
   }
 
   const canvas = document.getElementById('canvas');

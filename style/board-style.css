@@ -664,10 +664,48 @@ body {
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 20vh;
-  background: linear-gradient(160deg, #091a3a 0%, #0e2b61 55%, #0a1f46 100%);
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 204, 79, 0.16) 0%, transparent 34%),
+    radial-gradient(circle at 84% 78%, rgba(57, 142, 255, 0.18) 0%, transparent 38%),
+    linear-gradient(160deg, #070f25 0%, #0c2250 52%, #081735 100%);
   color: #fff;
   padding: 18px 28px;
   gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.game-screen::after {
+  content: 'ATE WILL TO WIN CHALLENGE!';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(5, 12, 29, 0.55);
+  color: #ffe08a;
+  font-size: clamp(14px, 1.45vw, 24px); /* when changing the font size */
+  letter-spacing: 3px;
+  font-weight: 900;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+  z-index: 4;
+  pointer-events: none;
+  animation: gameChallengePulse 1s ease-in-out infinite;
 }
 
 .game-frame-row {
@@ -675,6 +713,17 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.game-frame-row::before {
+  content: '';
+  position: absolute;
+  inset: -28%;
+  pointer-events: none;
+  background: linear-gradient(118deg, transparent 34%, rgba(255, 255, 255, 0.12) 50%, transparent 66%);
+  animation: gameSweep 8.8s linear infinite;
 }
 
 .game-camera-shell {
@@ -686,6 +735,34 @@ body {
   box-shadow: 0 10px 40px rgba(233, 194, 24, 0.3);
   position: relative;
   overflow: hidden;
+  animation: gameFramePulse 4.2s ease-in-out infinite;
+}
+
+.game-camera-shell::before,
+.game-camera-shell::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.game-camera-shell::before {
+  width: 260px;
+  height: 260px;
+  left: -90px;
+  top: -90px;
+  background: radial-gradient(circle, rgba(255, 216, 77, 0.24) 0%, transparent 70%);
+  animation: gameOrbFloat 6.2s ease-in-out infinite;
+}
+
+.game-camera-shell::after {
+  width: 290px;
+  height: 290px;
+  right: -100px;
+  bottom: -100px;
+  background: radial-gradient(circle, rgba(78, 165, 255, 0.2) 0%, transparent 72%);
+  animation: gameOrbFloat 7.4s ease-in-out infinite 1.6s;
 }
 
 #game_canvas {
@@ -714,8 +791,12 @@ body {
   text-align: center;
   border-radius: 14px;
   border: 2px solid rgba(255, 216, 77, 0.5);
-  background: linear-gradient(90deg, rgba(7, 18, 40, 0.85) 0%, rgba(21, 44, 92, 0.82) 100%);
+  background: linear-gradient(90deg, rgba(6, 15, 35, 0.9) 0%, rgba(19, 43, 96, 0.84) 100%);
   padding: 10px 20px;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 0 0 rgba(255, 216, 77, 0.2);
+  animation: gameQuestionGlow 3.2s ease-in-out infinite;
 }
 
 #game_question {
@@ -726,6 +807,77 @@ body {
   letter-spacing: 1px;
   line-height: 1.25;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.85);
+  max-height: 100%;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@keyframes gameSweep {
+  0% {
+    transform: translateX(-32%) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(32%) rotate(0deg);
+  }
+}
+
+@keyframes gameFramePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 10px 40px rgba(233, 194, 24, 0.28);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 12px 54px rgba(233, 194, 24, 0.48);
+    transform: scale(1.005);
+  }
+}
+
+@keyframes gameOrbFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: translateY(-16px) scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+@keyframes gameQuestionGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(255, 216, 77, 0.2);
+    border-color: rgba(255, 216, 77, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 22px rgba(255, 216, 77, 0.35);
+    border-color: rgba(255, 216, 77, 0.76);
+  }
+}
+
+@keyframes gameChallengePulse {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.025);
+    box-shadow: 0 10px 34px rgba(255, 216, 77, 0.26);
+  }
 }
 
 @media (max-width: 900px) {
@@ -735,10 +887,31 @@ body {
     gap: 10px;
   }
 
+  .game-screen::after {
+    top: 10px;
+    padding: 8px 12px;
+    letter-spacing: 1.4px;
+  }
+
   .game-camera-shell {
     width: 100%;
     height: clamp(180px, 64vh, 560px);
     border-width: 3px;
     border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .game-screen,
+  .game-screen::before,
+  .game-screen::after,
+  .game-frame-row::before,
+  .game-camera-shell,
+  .game-camera-shell::before,
+  .game-camera-shell::after,
+  .game-question-row {
+    animation: none !important;
+    transition: none !important;
   }
 }
