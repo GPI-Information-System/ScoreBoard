@@ -882,7 +882,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <div class="winner-team-card">
             <div class="winner-rank-chip rank-silver">2nd Place</div>
             <img src="picture/second.png" alt="Rank 2 Team" class="winner-team-logo">
-            <div class="winner-team-name">TEAM 2</div>
+            <div class="winner-team-name">WOLVES</div>
           </div>
           <div class="winner-podium-step step-second"><span>2</span></div>
         </div>
@@ -891,7 +891,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <div class="winner-team-card winner-team-champion">
             <div class="winner-rank-chip rank-gold">CHAMPION</div>
             <img src="picture/first.png" alt="Rank 1 Team" class="winner-team-logo">
-            <div class="winner-team-name">TEAM 1</div>
+            <div class="winner-team-name">VIPERS</div>
           </div>
           <div class="winner-podium-step step-first"><span>1</span></div>
         </div>
@@ -900,7 +900,7 @@ $records = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ingame_record W
           <div class="winner-team-card">
             <div class="winner-rank-chip rank-bronze">3rd Place</div>
             <img src="picture/third.png" alt="Rank 3" class="winner-team-logo">
-            <div class="winner-team-name">TEAM 3</div>
+            <div class="winner-team-name">SHARKS</div>
           </div>
           <div class="winner-podium-step step-third"><span>3</span></div>
         </div>
